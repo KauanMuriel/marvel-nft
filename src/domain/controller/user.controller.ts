@@ -5,7 +5,11 @@ import { UserService } from "../service/user.service";
 class UserController {
     private _userService: UserService;
 
-    public register = async (request: FastifyRequest, reply: FastifyReply) => {
+    public constructor() {
+        this.register = this.register.bind(this);
+    }
+
+    public async register(request: FastifyRequest, reply: FastifyReply) {
         const userDto = request.body as User;
         const createdUser = await this._userService.create(userDto);
         reply.send(new GetUserDto(createdUser));
