@@ -4,7 +4,7 @@ import { signupSchema } from "./user/user.schemas";
 
 export function configureAuthRoutes(app: FastifyInstance) {
     app.register((app, options, done) => {
-        app.post('/signup', { schema: signupSchema }, userController.register)
+        app.post('/signup', { schema: signupSchema, preHandler:  }, userController.register)
         done();
     });
 }
