@@ -1,16 +1,13 @@
-import express from 'express'
+import fastify, { FastifyInstance } from "fastify";
+import { configureRoutes } from "./domain/routes";
 
 class App {
-    public express: express.Application;
+    public fastify: FastifyInstance;
 
     public constructor() {
-        this.express = express();
-        this.middleware();
-    }
-
-    private middleware(): void {
-        this.express.use(express.json());
+        this.fastify = fastify();
+        configureRoutes(this.fastify);
     }
 }
 
-export default new App().express;
+export default new App().fastify;
