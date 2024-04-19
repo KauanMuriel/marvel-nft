@@ -1,5 +1,5 @@
-import { QueryFailedError, Repository } from "typeorm";
-import { User } from "../entity/user.entity";
+import { Repository } from "typeorm";
+import { User } from "./entities/user.entity";
 import { AppDataSource } from "../data-source";
 
 export class UserRepository {
@@ -10,12 +10,10 @@ export class UserRepository {
     }
 
     public create = async (user: User): Promise<User> => {
-        try {
-            return await this._databaseRepository.save(user);
-        } catch(error) {
-            if (error.code === '23505') {
-                
-            }
-        }
+        return await this._databaseRepository.save(user);
+    }
+
+    public async findByEmail(email: string): Promise<User> {
+        return await this._databaseRepository.findOneBy({ email: email });
     }
 }

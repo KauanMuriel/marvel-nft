@@ -1,5 +1,5 @@
 import { DataSource } from "typeorm";
-import { User } from "./entity/user.entity";
+import { User } from "./user/entities/user.entity";
 import { configDotenv } from "dotenv";
 
 configDotenv({path: "./.env"})

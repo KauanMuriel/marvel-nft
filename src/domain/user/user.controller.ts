@@ -1,7 +1,6 @@
 import { FastifyReply, FastifyRequest } from "fastify";
-import { User } from "../entity/user.entity";
-import { UserService } from "../service/user.service";
-import { GetUserDto } from "../dto/get-user.dto";
+import { User } from "./entities/user.entity";
+import { UserService } from "./user.service";
 
 class UserController {
     private _userService: UserService;
@@ -12,9 +11,8 @@ class UserController {
     }
 
     public async register(request: FastifyRequest, reply: FastifyReply) {
-        const userDto = request.body as User;
-        const createdUser = await this._userService.create(userDto);
-        reply.send(new GetUserDto(createdUser));
+        const createdUser = await this._userService.create(request.body as User);
+        reply.send(createdUser);
     };
 }
 
