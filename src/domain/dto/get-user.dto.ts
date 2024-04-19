@@ -1,7 +1,9 @@
-class GetUserDto {
+import { User } from "../entity/user.entity";
+
+export class GetUserDto {
     email: string;
 
-    public constructor(dto: GetUserDto) {
-        this.email = dto.email;
+    public constructor(data: User) {
+        this.email = data.email;
     }
 }

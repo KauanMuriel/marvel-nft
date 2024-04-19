@@ -1,4 +1,4 @@
-import { Repository } from "typeorm";
+import { QueryFailedError, Repository } from "typeorm";
 import { User } from "../entity/user.entity";
 import { AppDataSource } from "../data-source";
 
@@ -10,6 +10,12 @@ export class UserRepository {
     }
 
     public create = async (user: User): Promise<User> => {
-        return await this._databaseRepository.save(user);
+        try {
+            return await this._databaseRepository.save(user);
+        } catch(error) {
+            if (error.code === '23505') {
+                
+            }
+        }
     }
 }
