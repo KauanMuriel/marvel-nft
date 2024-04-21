@@ -19,13 +19,13 @@ jobs:
           - name: Get postgres Dockerfile
             run: git clone https://github.com/KauanMuriel/marvel-nft/
 
-          - name: Build marvel-nft postgres
-            run: docker build -t marvel-nft:postgres marvel-nft/docker/postgres/.
+          - name: Build marvelnft postgres
+            run: docker build -t marvelnft:postgres marvelnft/docker/postgres/.
   
-          - name: Push marvel-nft postgres
+          - name: Push marvelnft postgres
             run: |
-              docker tag marvel-nft:postgres "${{ secrets.DOCKERHUB_USERNAME }}/marvel-nft:postgres"
-              docker push "${{ secrets.DOCKERHUB_USERNAME }}/marvel-nft:postgres"
+              docker tag marvelnft:postgres "${{ secrets.DOCKERHUB_USERNAME }}/marvelnft:postgres"
+              docker push "${{ secrets.DOCKERHUB_USERNAME }}/marvelnft:postgres"
 
     build_node_job:
         runs-on: ubuntu-latest
@@ -41,13 +41,13 @@ jobs:
                 password: ${{ secrets.DOCKERHUB_PASSWORD }}
                     
             - name: Get node Dockerfile
-              run: git clone https://github.com/KauanMuriel/marvel-nft/
+              run: git clone https://github.com/KauanMuriel/marvelnft/
           
-            - name: Build marvel-nft node
-              run: docker build -t marvel-nft:node marvel-nft/docker/node/.
+            - name: Build marvelnft node
+              run: docker build -t marvelnft:node marvelnft/docker/node/.
             
-            - name: Push marvel-nft node
+            - name: Push marvelnft node
               run: |
-                docker tag marvel-nft:node "${{ secrets.DOCKERHUB_USERNAME }}/marvel-nft:node"
-                docker push "${{ secrets.DOCKERHUB_USERNAME }}/marvel-nft:node"
+                docker tag marvelnft:node "${{ secrets.DOCKERHUB_USERNAME }}/marvelnft:node"
+                docker push "${{ secrets.DOCKERHUB_USERNAME }}/marvelnft:node"
           
