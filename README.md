@@ -3,7 +3,7 @@ Aplicação web o qual os usários podem minerar, trocar, vender e colecionar to
 
 Semelhante a um ecosistema de NFT's, a plataforma permite a mineração de tokens únicos que podem ser vendidos dentro do marketplace. Os tokens são únicos e são gerados a partir da API da marvel.
 
-## BANCO DE DADO
+## BANCO DE DADOS
 #### PostgresSQL + TypeORM
 
 O banco de dados será executado em um conteiner docker para facilitar o desenvolvimento e entrega do projeto.
