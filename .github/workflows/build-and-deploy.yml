@@ -1,0 +1,53 @@
+name: Build and Deploy
+run-name: Build and deploy docker images on dockerhub
+
+on: [push, workflow_dispatch]
+jobs:
+    build_postgres_job:
+      runs-on: ubuntu-latest
+
+      steps:
+          - name: Checkout
+            uses: actions/checkout@v4
+
+          - name: Autenticate with Docker Hub
+            uses: docker/login-action@v2
+            with:
+              username: ${{ secrets.DOCKERHUB_USERNAME }}
+              password: ${{ secrets.DOCKERHUB_PASSWORD }}
+          
+          - name: Get postgres Dockerfile
+            run: git clone https://github.com/KauanMuriel/marvel-nft/
+
+          - name: Build marvel-nft postgres
+            run: docker build -t marvel-nft:postgres marvel-nft/docker/postgres/.
+  
+          - name: Push marvel-nft postgres
+            run: |
+              docker tag marvel-nft:postgres "${{ secrets.DOCKERHUB_USERNAME }}/marvel-nft:postgres"
+              docker push "${{ secrets.DOCKERHUB_USERNAME }}/marvel-nft:postgres"
+
+    build_node_job:
+        runs-on: ubuntu-latest
+          
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v4
+          
+            - name: Autenticate with Docker Hub
+              uses: docker/login-action@v2
+              with:
+                username: ${{ secrets.DOCKERHUB_USERNAME }}
+                password: ${{ secrets.DOCKERHUB_PASSWORD }}
+                    
+            - name: Get node Dockerfile
+              run: git clone https://github.com/KauanMuriel/marvel-nft/
+          
+            - name: Build marvel-nft node
+              run: docker build -t marvel-nft:node marvel-nft/docker/node/.
+            
+            - name: Push marvel-nft node
+              run: |
+                docker tag marvel-nft:node "${{ secrets.DOCKERHUB_USERNAME }}/marvel-nft:node"
+                docker push "${{ secrets.DOCKERHUB_USERNAME }}/marvel-nft:node"
+          
