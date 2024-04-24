@@ -1,7 +1,8 @@
-import { FastifyReply, FastifyRequest } from "fastify";
-import { UserService } from "../user/user.service";
+import { compare, hash } from "bcrypt";
 import { User } from "../user/entities/user.entity";
-import { hash, compare } from 'bcrypt';
+import { UserService } from "../user/user.service";
+import { sign } from "jsonwebtoken";
+import { UnauthorizedException } from "../common/exceptions/unauthorized.exception";
 
 export class AuthService {
     private readonly _userService: UserService;
@@ -10,23 +11,24 @@ export class AuthService {
         this._userService = new UserService();
     }
 
-    public async signup(request: FastifyRequest, reply: FastifyReply) {
-        const createdUser = await this._userService.create(request.body as User);
-        reply.send(createdUser);
-    };
-
-    public async signin(request: FastifyRequest, reply: FastifyReply) {
-        const requestBody = request.body as any;
-        const existsUser = await this._userService.getByEmail(requestBody.email);
+    public async signin(user: User): Promise<string> {
+        const existsUser = await this._userService.getByEmail(user.email);
 
         if (existsUser === null) {
-            return reply.status(400).send("The email or password is wrong!");
+            throw new UnauthorizedException("The email or password is wrong!");
         }
 
-        const passwordHashed = await hash(requestBody.password, process.env.BCRYPT_SALT);
+        const passwordHashed = await hash(user.password, process.env.BCRYPT_SALT);
 
         if (!await compare(existsUser.password, passwordHashed)) {
-            return reply.status(400).send("The email or password is wrong!");
+            throw new UnauthorizedException("The email or password is wrong!");
         }
+
+        return sign({ uuid: existsUser.uuid }, process.env.JWT_SECRET, { expiresIn: '2h'})
+    }
+
+    public async signup(user: User) {
+        user.password = await hash(user.password, process.env.BCRYPT_SALT);
+        return await this._userService.create(user);
     }
 }
