@@ -15,13 +15,10 @@ jobs:
             with:
               username: ${{ secrets.DOCKERHUB_USERNAME }}
               password: ${{ secrets.DOCKERHUB_PASSWORD }}
-          
-          - name: Get postgres Dockerfile
-            run: git clone https://github.com/KauanMuriel/marvel-nft/
 
           - name: Build marvelnft postgres
-            run: docker build -t marvelnft:postgres marvelnft/docker/postgres/.
-  
+            run: docker build -t marvelnft:postgres docker/postgres/.
+
           - name: Push marvelnft postgres
             run: |
               docker tag marvelnft:postgres "${{ secrets.DOCKERHUB_USERNAME }}/marvelnft:postgres"
@@ -29,23 +26,20 @@ jobs:
 
     build_node_job:
         runs-on: ubuntu-latest
-          
+
         steps:
             - name: Checkout
               uses: actions/checkout@v4
-          
+
             - name: Autenticate with Docker Hub
               uses: docker/login-action@v2
               with:
                 username: ${{ secrets.DOCKERHUB_USERNAME }}
                 password: ${{ secrets.DOCKERHUB_PASSWORD }}
-                    
-            - name: Get node Dockerfile
-              run: git clone https://github.com/KauanMuriel/marvelnft/
-          
+
             - name: Build marvelnft node
-              run: docker build -t marvelnft:node marvelnft/docker/node/.
-            
+              run: docker build -t marvelnft:node docker/node/.
+
             - name: Push marvelnft node
               run: |
                 docker tag marvelnft:node "${{ secrets.DOCKERHUB_USERNAME }}/marvelnft:node"
