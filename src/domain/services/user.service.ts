@@ -1,4 +1,4 @@
-import { User } from "../../domain/entities/user.entity";
+import { User } from "../entities/user.entity";
 import { UserRepository } from "../../insfrastructure/db/repositories/user.repository"
 import { ConflictException } from "../exceptions/conflict.exception";
 
