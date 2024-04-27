@@ -7,7 +7,7 @@
     "typeorm": "typeorm-ts-node-commonjs -d ./src/domain/db/data-source.ts",
     "typeorm:run": "typeorm-ts-node-commonjs -d ./src/domain/db/data-source.ts migration:run",
     "typeorm:revert": "typeorm-ts-node-commonjs -d ./src/domain/db/data-source.ts migration:revert",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "tap --ts --reporter=spec --timeout=5"
   },
   "author": "",
   "license": "ISC",
@@ -28,6 +28,7 @@
     "@types/bcrypt": "^5.0.2",
     "@types/express": "^4.17.21",
     "@types/jsonwebtoken": "^9.0.6",
+    "tap": "^18.7.2",
     "ts-node": "^10.9.2",
     "typescript": "^5.4.5"
   }
