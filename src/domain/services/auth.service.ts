@@ -1,5 +1,5 @@
 import { compare, hash } from "bcrypt";
-import { User } from "../../domain/entities/user.entity";
+import { User } from "../entities/user.entity";
 import { UserService } from "./user.service";
 import { sign } from "jsonwebtoken";
 import { UnauthorizedException } from "../common/exceptions/unauthorized.exception";
