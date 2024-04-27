@@ -1,7 +1,7 @@
 import { FastifyReply, FastifyRequest } from "fastify";
 import * as fastifyCookie from "@fastify/cookie";
-import { User } from "../user/entities/user.entity";
-import { AuthService } from "./auth.service";
+import { User } from "../../domain/entities/user.entity";
+import { AuthService } from "../../domain/services/auth.service";
 
 class AuthController {
     private readonly _authService: AuthService;

@@ -1,7 +1,7 @@
 import { FastifyInstance } from "fastify";
-import { signupSchema } from "./auth.schemas";
-import { authenticate } from "../common/middlewares/auth.middleware";
-import authController from "./auth.controller";
+import { signupSchema } from "./schemas/auth.schemas";
+import { authenticate } from "../middlewares/auth.middleware";
+import authController from "../controllers/auth.controller";
 
 export function configureAuthRoutes(app: FastifyInstance) {
     app.register((app, options, done) => {

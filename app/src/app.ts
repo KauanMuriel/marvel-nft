@@ -1,6 +1,6 @@
 import fastify, { FastifyInstance } from "fastify";
 import fastifySwagger from "@fastify/swagger";
-import { configureAuthRoutes } from "./domain/auth/auth.routes";
+import { configureAuthRoutes } from "./api/routes/auth.routes";
 import { fastifySwaggerUi } from "@fastify/swagger-ui";
 import { fastifyCookie } from "@fastify/cookie";
 
