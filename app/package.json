@@ -4,6 +4,9 @@
   "main": "main.ts",
   "scripts": {
     "start": "ts-node src/main.ts",
+    "typeorm": "typeorm-ts-node-commonjs -d ./src/domain/db/data-source.ts",
+    "typeorm:run": "typeorm-ts-node-commonjs -d ./src/domain/db/data-source.ts migration:run",
+    "typeorm:revert": "typeorm-ts-node-commonjs -d ./src/domain/db/data-source.ts migration:revert",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
