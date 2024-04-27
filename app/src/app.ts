@@ -1,7 +1,8 @@
 import fastify, { FastifyInstance } from "fastify";
 import fastifySwagger from "@fastify/swagger";
-import { configureAuthRoutes } from "./domain/routes";
+import { configureAuthRoutes } from "./api/routes/auth.routes";
 import { fastifySwaggerUi } from "@fastify/swagger-ui";
+import { fastifyCookie } from "@fastify/cookie";
 
 const swaggerUiOptions = { routePrefix: "/docs" };
 const swaggerOptions = {
@@ -30,12 +31,17 @@ class App {
 
     public constructor() {
         this.fastify = fastify();
+        this.configureCookies();
         this.configureSwagger();
         this.configureRoutes(this.fastify);
     }
 
     private configureRoutes(fastify: FastifyInstance) {
         configureAuthRoutes(fastify);
+    }
+
+    private configureCookies() {
+        this.fastify.register(fastifyCookie);
     }
 
     private configureSwagger() {

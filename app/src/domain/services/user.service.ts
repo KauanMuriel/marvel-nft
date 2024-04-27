@@ -1,6 +1,6 @@
-import { ConflictException } from "../common/exceptions/conflict.exception";
-import { User } from "./entities/user.entity";
-import { UserRepository } from "./user.repository"
+import { User } from "../../domain/entities/user.entity";
+import { UserRepository } from "../../insfrastructure/db/repositories/user.repository"
+import { ConflictException } from "../exceptions/conflict.exception";
 
 export class UserService {
     private readonly _userRepository: UserRepository;
