@@ -1,14 +1,21 @@
 import { compare, hash } from "bcrypt";
 import { User } from "../entities/user.entity";
-import { UserService } from "./user.service";
 import { sign } from "jsonwebtoken";
-import { UnauthorizedException } from "../common/exceptions/unauthorized.exception";
+import { UnauthorizedException } from "../exceptions/unauthorized.exception";
+import { IAuthService } from "../interfaces/i.auth.service";
+import { IUserService } from "../interfaces/i.user.service";
+import { inject, injectable } from "inversify";
+import { TYPES } from "../../api/util/di/di-types";
 
-export class AuthService {
-    private readonly _userService: UserService;
+@injectable()
+export class AuthService implements IAuthService {
+    private readonly _userService: IUserService;
 
-    public constructor() {
-        this._userService = new UserService();
+    public constructor(@inject(TYPES.IUserService) userService: IUserService) {
+        this._userService = userService;
+
+        this.signup = this.signin.bind(this);
+        this.signin = this.signin.bind(this);
     }
 
     public async signin(user: User): Promise<string> {
@@ -27,7 +34,7 @@ export class AuthService {
         return sign({ uuid: existsUser.uuid }, process.env.JWT_SECRET, { expiresIn: '2h'})
     }
 
-    public async signup(user: User) {
+    public async signup(user: User): Promise<User> {
         user.password = await hash(user.password, process.env.BCRYPT_SALT);
         return await this._userService.create(user);
     }

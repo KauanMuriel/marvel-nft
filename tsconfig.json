@@ -5,6 +5,7 @@
           "es6"
        ],
        "target": "es5",
+       "types": ["reflect-metadata"],
        "esModuleInterop": true,
        "module": "commonjs",
        "moduleResolution": "node",

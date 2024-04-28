@@ -2,8 +2,8 @@ import { DataSource } from "typeorm";
 import { User } from "../../domain/entities/user.entity";
 import { configDotenv } from "dotenv";
 
-configDotenv({path: "../.env"})
-
+configDotenv({path: "./.env"})
+console.log(__dirname)
 export const AppDataSource = new DataSource({
     type: "postgres",
     host: process.env.DB_HOST,
@@ -12,5 +12,5 @@ export const AppDataSource = new DataSource({
     password: process.env.DB_PASSWORD,
     database: process.env.DB_DATABASE,
     entities: [User],
-    migrations: ["src/domain/db/migrations/*.ts"]
+    migrations: [__dirname + "/migrations/*.ts"]
 })

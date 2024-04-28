@@ -1,9 +1,9 @@
 import { FastifyInstance } from "fastify";
 import { signupSchema } from "./schemas/auth.schemas";
 import { authenticate } from "../middlewares/auth.middleware";
-import authController from "../controllers/auth.controller";
+import { IAuthController } from "../interfaces/i.auth.controller";
 
-export function configureAuthRoutes(app: FastifyInstance) {
+export function configureAuthRoutes(app: FastifyInstance, authController: IAuthController) {
     app.register((app, options, done) => {
         app.post('/auth/signup', { schema: signupSchema }, authController.signup);
         app.post('/auth/signin', { schema: signupSchema }, authController.signin);

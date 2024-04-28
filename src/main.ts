@@ -1,5 +1,5 @@
 import App from "./app";
-import { AppDataSource } from "./insfrastructure/db/data-source";
+import { AppDataSource } from "./infrastructure/db/data-source";
 
 AppDataSource.initialize().then(async () => {
     await AppDataSource.runMigrations();
