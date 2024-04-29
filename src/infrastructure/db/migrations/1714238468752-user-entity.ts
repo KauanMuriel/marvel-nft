@@ -6,7 +6,7 @@ export class UserEntity1714238468752 implements MigrationInterface {
         queryRunner.createTable(new Table({
             name: 'user',
             columns: [
-                { name: "id", type: "uuid", isPrimary: true },
+                { name: "uuid", type: "uuid", isPrimary: true, isGenerated: true, generationStrategy: "uuid" },
                 { name: "username", type: "varchar", isUnique: true },
                 { name: "email", type: "varchar", isUnique: true },
                 { name: "password", type: "varchar"},

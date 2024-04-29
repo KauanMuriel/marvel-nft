@@ -1,20 +1,28 @@
+import "reflect-metadata"
 import { User } from "../entities/user.entity";
-import { UserRepository } from "../../insfrastructure/db/repositories/user.repository"
 import { ConflictException } from "../exceptions/conflict.exception";
+import { IUserService } from "../interfaces/i.user.service";
+import { IUserRepository } from "../interfaces/i.user.respository";
+import { inject, injectable } from "inversify";
+import { TYPES } from "../../api/util/di/di-types";
+import { UserRepository } from "../../infrastructure/db/repositories/user.repository";
+import { MockUserRepository } from "../../../test/mocks/user.repository.mock";
 
-export class UserService {
-    private readonly _userRepository: UserRepository;
+@injectable()
+export class UserService implements IUserService {
+    private readonly _userRepository: IUserRepository;
 
-    public constructor() {
-        this._userRepository = new UserRepository();
+    public constructor(@inject(TYPES.IUserRepository) userRepository: IUserRepository) {
+        this._userRepository = userRepository;
 
         this.create = this.create.bind(this);
+        this.getByEmail = this.getByEmail.bind(this);
     }
 
     public async create(user: User): Promise<User> {
         const existsUser = await this.getByEmail(user.email);
 
-        if (existsUser !== null) {
+        if (existsUser && existsUser !== null) {
             throw new ConflictException("There is already a user with this email");
         }
 

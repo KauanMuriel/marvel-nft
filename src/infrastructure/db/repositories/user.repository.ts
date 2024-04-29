@@ -1,15 +1,18 @@
 import { Repository } from "typeorm";
 import { User } from "../../../domain/entities/user.entity";
-import { AppDataSource } from "../db/data-source";
+import { AppDataSource } from "../data-source"
+import { IUserRepository } from "../../../domain/interfaces/i.user.respository";
+import { injectable } from "inversify";
 
-export class UserRepository {
+@injectable()
+export class UserRepository implements IUserRepository {
     private _databaseRepository: Repository<User>;
 
     public constructor() {
         this._databaseRepository = AppDataSource.getRepository(User);
     }
 
-    public create = async (user: User): Promise<User> => {
+    public async create(user: User): Promise<User> {
         return await this._databaseRepository.save(user);
     }
 

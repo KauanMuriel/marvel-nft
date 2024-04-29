@@ -3,6 +3,11 @@ import fastifySwagger from "@fastify/swagger";
 import { configureAuthRoutes } from "./api/routes/auth.routes";
 import { fastifySwaggerUi } from "@fastify/swagger-ui";
 import { fastifyCookie } from "@fastify/cookie";
+import { configureHealthCheckRoutes } from "./api/routes/health-check.routes";
+import { Container } from "inversify";
+import { configureDependencyContainer } from "./api/util/di/di-configure";
+import { IAuthController } from "./api/interfaces/i.auth.controller";
+import { TYPES } from "./api/util/di/di-types";
 
 const swaggerUiOptions = { routePrefix: "/docs" };
 const swaggerOptions = {
@@ -28,16 +33,22 @@ const swaggerOptions = {
 
 class App {
     public fastify: FastifyInstance;
+    public container: Container;
+    private _authController: IAuthController;
 
     public constructor() {
         this.fastify = fastify();
+        this.container = new Container({ defaultScope: "Request" });
+        configureDependencyContainer(this.container);
+        this._authController = this.container.get<IAuthController>(TYPES.IAuthController);
         this.configureCookies();
         this.configureSwagger();
-        this.configureRoutes(this.fastify);
+        this.configureRoutes();
     }
 
-    private configureRoutes(fastify: FastifyInstance) {
-        configureAuthRoutes(fastify);
+    private configureRoutes() {
+        configureAuthRoutes(this.fastify, this._authController);
+        configureHealthCheckRoutes(this.fastify);
     }
 
     private configureCookies() {
@@ -50,4 +61,4 @@ class App {
     }
 }
 
-export default new App().fastify;
+export default new App();
