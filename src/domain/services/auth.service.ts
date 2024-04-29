@@ -14,7 +14,7 @@ export class AuthService implements IAuthService {
     public constructor(@inject(TYPES.IUserService) userService: IUserService) {
         this._userService = userService;
 
-        this.signup = this.signin.bind(this);
+        this.signup = this.signup.bind(this);
         this.signin = this.signin.bind(this);
     }
 

@@ -19,7 +19,7 @@ export class AuthController implements IAuthController {
     }
 
     public async signup(request: FastifyRequest, reply: FastifyReply): Promise<FastifyReply> {
-        const createdUser = this._authService.signup(request.body as User);
+        const createdUser = await this._authService.signup(request.body as User);
         return reply.send(createdUser);
     };
 

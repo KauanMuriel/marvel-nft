@@ -1,9 +1,12 @@
+import "reflect-metadata"
 import { User } from "../entities/user.entity";
 import { ConflictException } from "../exceptions/conflict.exception";
 import { IUserService } from "../interfaces/i.user.service";
 import { IUserRepository } from "../interfaces/i.user.respository";
 import { inject, injectable } from "inversify";
 import { TYPES } from "../../api/util/di/di-types";
+import { UserRepository } from "../../infrastructure/db/repositories/user.repository";
+import { MockUserRepository } from "../../../test/mocks/user.repository.mock";
 
 @injectable()
 export class UserService implements IUserService {
@@ -19,7 +22,7 @@ export class UserService implements IUserService {
     public async create(user: User): Promise<User> {
         const existsUser = await this.getByEmail(user.email);
 
-        if (existsUser !== null) {
+        if (existsUser && existsUser !== null) {
             throw new ConflictException("There is already a user with this email");
         }
 

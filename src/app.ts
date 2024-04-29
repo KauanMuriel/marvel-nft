@@ -33,14 +33,14 @@ const swaggerOptions = {
 
 class App {
     public fastify: FastifyInstance;
-    private readonly _container: Container;
-    private readonly _authController: IAuthController;
+    public container: Container;
+    private _authController: IAuthController;
 
     public constructor() {
         this.fastify = fastify();
-        this._container = new Container({ defaultScope: "Request" });
-        configureDependencyContainer(this._container);
-        this._authController = this._container.get<IAuthController>(TYPES.IAuthController);
+        this.container = new Container({ defaultScope: "Request" });
+        configureDependencyContainer(this.container);
+        this._authController = this.container.get<IAuthController>(TYPES.IAuthController);
         this.configureCookies();
         this.configureSwagger();
         this.configureRoutes();
@@ -61,4 +61,4 @@ class App {
     }
 }
 
-export default new App().fastify;
+export default new App();
