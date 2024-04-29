@@ -11,6 +11,12 @@ export class ComicService implements IComicService {
 
     public constructor(@inject(TYPES.IComicRepository) ComicRepository: IComicRepository) {
         this._ComicRepository = ComicRepository;
+
+        this.create = this.create.bind(this);
+        this.update = this.update.bind(this);
+        this.delete = this.delete.bind(this);
+        this.getAll = this.getAll.bind(this);
+        this.getByUuid = this.getByUuid.bind(this);
     }
 
     create(user: Comic): Promise<Comic> {

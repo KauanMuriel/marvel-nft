@@ -7,29 +7,35 @@ import { TYPES } from "../../api/util/di/di-types";
 
 @injectable()
 export class CharacterService implements ICharacterService {
-    private readonly _CharacterRepository: ICharacterRepository;
+    private readonly _characterRepository: ICharacterRepository;
 
-    public constructor(@inject(TYPES.ICharacterRepository) CharacterRepository: ICharacterRepository) {
-        this._CharacterRepository = CharacterRepository;
+    public constructor(@inject(TYPES.ICharacterRepository) characterRepository: ICharacterRepository) {
+        this._characterRepository = characterRepository;
+
+        this.create = this.create.bind(this);
+        this.update = this.update.bind(this);
+        this.delete = this.delete.bind(this);
+        this.getAll = this.getAll.bind(this);
+        this.getByUuid = this.getByUuid.bind(this);
     }
 
-    create(user: Character): Promise<Character> {
-        throw new Error("Method not implemented.");
+    public async create(character: Character): Promise<Character> {
+        return await this._characterRepository.create(character);
     }
 
-    getAll(): Promise<Character[]> {
-        throw new Error("Method not implemented.");
+    public async getAll(): Promise<Character[]> {
+        return await this._characterRepository.getAll();
     }
 
-    getByUuid(uuid: string): Promise<Character> {
-        throw new Error("Method not implemented.");
+    public async getByUuid(uuid: string): Promise<Character> {
+        return await this._characterRepository.getByUuid(uuid);
     }
 
-    update(Character: Character): Promise<UpdateResult> {
-        throw new Error("Method not implemented.");
+    public async update(character: Character): Promise<UpdateResult> {
+        return await this._characterRepository.update(character);
     }
 
-    delete(uuid: string): Promise<DeleteResult> {
-        throw new Error("Method not implemented.");
+    public async delete(uuid: string): Promise<DeleteResult> {
+        return await this._characterRepository.delete(uuid);
     }
 }

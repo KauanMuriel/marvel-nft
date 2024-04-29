@@ -11,25 +11,31 @@ export class CreatorService implements ICreatorService {
 
     public constructor(@inject(TYPES.ICreatorRepository) creatorRepository: ICreatorRepository) {
         this._creatorRepository = creatorRepository;
+
+        this.create = this.create.bind(this);
+        this.update = this.update.bind(this);
+        this.delete = this.delete.bind(this);
+        this.getAll = this.getAll.bind(this);
+        this.getByUuid = this.getByUuid.bind(this);
     }
 
-    create(user: Creator): Promise<Creator> {
-        throw new Error("Method not implemented.");
+    public async create(creator: Creator): Promise<Creator> {
+        return await this._creatorRepository.create(creator);
     }
 
-    getAll(): Promise<Creator[]> {
-        throw new Error("Method not implemented.");
+    public async getAll(): Promise<Creator[]> {
+        return await this._creatorRepository.getAll();
     }
 
-    getByUuid(uuid: string): Promise<Creator> {
-        throw new Error("Method not implemented.");
+    public async getByUuid(uuid: string): Promise<Creator> {
+        return await this._creatorRepository.getByUuid(uuid);
     }
 
-    update(creator: Creator): Promise<UpdateResult> {
-        throw new Error("Method not implemented.");
+    public async update(creator: Creator): Promise<UpdateResult> {
+        return await this._creatorRepository.update(creator);
     }
 
-    delete(uuid: string): Promise<DeleteResult> {
-        throw new Error("Method not implemented.");
+    public async delete(uuid: string): Promise<DeleteResult> {
+        return await this._creatorRepository.delete(uuid);
     }
 }
