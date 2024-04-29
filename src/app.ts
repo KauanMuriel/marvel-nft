@@ -8,6 +8,12 @@ import { Container } from "inversify";
 import { configureDependencyContainer } from "./api/util/di/di-configure";
 import { IAuthController } from "./api/interfaces/i.auth.controller";
 import { TYPES } from "./api/util/di/di-types";
+import { ICreatorController } from "./api/interfaces/i.creator.controller";
+import { configureCreatorRoutes } from "./api/routes/creator.routes";
+import { ICharacterController } from "./api/interfaces/i.character.controller";
+import { IComicController } from "./api/interfaces/i.comic.controller";
+import { configureCharacterRoutes } from "./api/routes/character.routes";
+import { configureComicRoutes } from "./api/routes/comic.routes";
 
 const swaggerUiOptions = { routePrefix: "/docs" };
 const swaggerOptions = {
@@ -34,13 +40,19 @@ const swaggerOptions = {
 class App {
     public fastify: FastifyInstance;
     public container: Container;
-    private _authController: IAuthController;
+    private readonly _authController: IAuthController;
+    private readonly _creatorController: ICreatorController;
+    private readonly _characterController: ICharacterController;
+    private readonly _comicController: IComicController;
 
     public constructor() {
         this.fastify = fastify();
         this.container = new Container({ defaultScope: "Request" });
         configureDependencyContainer(this.container);
         this._authController = this.container.get<IAuthController>(TYPES.IAuthController);
+        this._creatorController = this.container.get<ICreatorController>(TYPES.ICreatorController);
+        this._characterController = this.container.get<ICharacterController>(TYPES.ICharacterController);
+        this._comicController = this.container.get<IComicController>(TYPES.IComicController);
         this.configureCookies();
         this.configureSwagger();
         this.configureRoutes();
@@ -48,6 +60,9 @@ class App {
 
     private configureRoutes() {
         configureAuthRoutes(this.fastify, this._authController);
+        configureCreatorRoutes(this.fastify, this._creatorController);
+        configureCharacterRoutes(this.fastify, this._characterController);
+        configureComicRoutes(this.fastify, this._comicController);
         configureHealthCheckRoutes(this.fastify);
     }
 
