@@ -3,22 +3,25 @@ import { IComicController } from "../interfaces/i.comic.controller";
 import { injectable, inject } from "inversify";
 import { TYPES } from "../util/di/di-types";
 import { IComicService } from "../../domain/interfaces/i.comic.service";
+import { Comic } from "../../domain/entities/comic.entity";
 
 @injectable()
 export class ComicController implements IComicController {
 
-    private readonly _ComicService: IComicService;
+    private readonly _comicService: IComicService;
 
     public constructor(@inject(TYPES.IComicService) ComicService: IComicService) {
-        this._ComicService = ComicService;
+        this._comicService = ComicService;
     }
 
     public async getAll(request: FastifyRequest, reply: FastifyReply): Promise<FastifyReply> {
-        throw new Error("Method not implemented.");
+        const comics = await this._comicService.getAll();
+        return reply.send(comics);
     }
     
     public async getById(request: FastifyRequest, reply: FastifyReply): Promise<FastifyReply> {
-        throw new Error("Method not implemented.");
+        const comic = await this._comicService.getByUuid(request.params['uuid'])
+        return reply.send(comic);
     }
 
     public async update(request: FastifyRequest, reply: FastifyReply): Promise<FastifyReply> {
@@ -26,10 +29,12 @@ export class ComicController implements IComicController {
     }
     
     public async delete(request: FastifyRequest, reply: FastifyReply): Promise<FastifyReply> {
-        throw new Error("Method not implemented.");
+        await this._comicService.delete(request.params['uuid']);
+        return reply.send(204);
     }
 
     public async create(request: FastifyRequest, reply: FastifyReply): Promise<FastifyReply> {
-        throw new Error("Method not implemented.");
+        const createdComic = await this._comicService.create(request.body as Comic);
+        return reply.send(createdComic);
     }
 }

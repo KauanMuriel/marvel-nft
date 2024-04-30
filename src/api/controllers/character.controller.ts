@@ -18,17 +18,20 @@ export class CharacterController implements ICharacterController {
         const characters = await this._characterService.getAll();
         return reply.send(characters);
     }
-    
+
     public async getById(request: FastifyRequest, reply: FastifyReply): Promise<FastifyReply> {
-        throw new Error("Method not implemented.");
+        const character = this._characterService.getByUuid(request.params['uuid']);
+        return reply.send(character);
     }
 
     public async update(request: FastifyRequest, reply: FastifyReply): Promise<FastifyReply> {
-        throw new Error("Method not implemented.");
+        await this._characterService.update(request.body as Character);
+        return reply.send(204);
     }
-    
+
     public async delete(request: FastifyRequest, reply: FastifyReply): Promise<FastifyReply> {
-        throw new Error("Method not implemented.");
+        await this._characterService.delete(request.params['uuid']);
+        return reply.send(204);
     }
 
     public async create(request: FastifyRequest, reply: FastifyReply): Promise<FastifyReply> {

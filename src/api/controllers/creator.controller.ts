@@ -3,6 +3,7 @@ import { ICreatorController } from "../interfaces/i.creator.controller";
 import { injectable, inject } from "inversify";
 import { TYPES } from "../util/di/di-types";
 import { ICreatorService } from "../../domain/interfaces/i.creator.service";
+import { Creator } from "../../domain/entities/creator.entity";
 
 @injectable()
 export class CreatorController implements ICreatorController {
@@ -14,22 +15,27 @@ export class CreatorController implements ICreatorController {
     }
 
     public async getAll(request: FastifyRequest, reply: FastifyReply): Promise<FastifyReply> {
-        throw new Error("Method not implemented.");
+        const creators = await this._creatorService.getAll();
+        return reply.send(creators);
     }
     
     public async getById(request: FastifyRequest, reply: FastifyReply): Promise<FastifyReply> {
-        throw new Error("Method not implemented.");
+        const creator = await this._creatorService.getByUuid(request.params['uuid']);
+        return reply.send(creator);
     }
 
     public async update(request: FastifyRequest, reply: FastifyReply): Promise<FastifyReply> {
-        throw new Error("Method not implemented.");
+        await this._creatorService.update(request.body as Creator);
+        return reply.status(204);
     }
     
     public async delete(request: FastifyRequest, reply: FastifyReply): Promise<FastifyReply> {
-        throw new Error("Method not implemented.");
+        await this._creatorService.delete(request.params['uuid']);
+        return reply.status(204);
     }
 
     public async create(request: FastifyRequest, reply: FastifyReply): Promise<FastifyReply> {
-        throw new Error("Method not implemented.");
+        const createdCreator = await this._creatorService.create(request.body as Creator);
+        return reply.send(createdCreator);
     }
 }
