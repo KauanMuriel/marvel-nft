@@ -11,6 +11,9 @@ export class UserRepository implements IUserRepository {
     public constructor() {
         this._databaseRepository = AppDataSource.getRepository(User);
     }
+    public async findByUuid(uuid: string): Promise<User> {
+        return await this._databaseRepository.findOneBy({ uuid: uuid });
+    }
 
     public async create(user: User): Promise<User> {
         return await this._databaseRepository.save(user);

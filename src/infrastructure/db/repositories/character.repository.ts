@@ -28,11 +28,11 @@ export class CharacterRepository implements ICharacterRepository {
         return await this._databaseRepository.find();
     }
 
-    public async delete(uuid: string): Promise<DeleteResult> {
-        return await this._databaseRepository.delete(uuid);
+    public async delete(uuid: string): Promise<void> {
+        await this._databaseRepository.delete(uuid);
     }
 
-    public async update(Character: Character): Promise<UpdateResult> {
-        return await this._databaseRepository.update(Character.uuid, Character);
+    public async update(Character: Character): Promise<void> {
+        await this._databaseRepository.update(Character.uuid, Character);
     }
 }

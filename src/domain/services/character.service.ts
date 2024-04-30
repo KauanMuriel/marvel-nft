@@ -1,7 +1,6 @@
 import { injectable, inject } from "inversify";
 import { ICharacterService } from "../interfaces/i.character.service";
 import { ICharacterRepository } from "../interfaces/i.character.repository";
-import { UpdateResult, DeleteResult } from "typeorm";
 import { Character } from "../entities/character.entity";
 import { TYPES } from "../../api/util/di/di-types";
 import { ConflictException } from "../exceptions/conflict.exception";
@@ -35,11 +34,11 @@ export class CharacterService implements ICharacterService {
         return await this._characterRepository.getByUuid(uuid);
     }
 
-    public async update(character: Character): Promise<UpdateResult> {
-        return await this._characterRepository.update(character);
+    public async update(character: Character): Promise<void> {
+        await this._characterRepository.update(character);
     }
 
-    public async delete(uuid: string): Promise<DeleteResult> {
-        return await this._characterRepository.delete(uuid);
+    public async delete(uuid: string): Promise<void> {
+        await this._characterRepository.delete(uuid);
     }
 }
