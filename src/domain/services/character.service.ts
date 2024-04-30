@@ -4,6 +4,7 @@ import { ICharacterRepository } from "../interfaces/i.character.repository";
 import { UpdateResult, DeleteResult } from "typeorm";
 import { Character } from "../entities/character.entity";
 import { TYPES } from "../../api/util/di/di-types";
+import { ConflictException } from "../exceptions/conflict.exception";
 
 @injectable()
 export class CharacterService implements ICharacterService {
@@ -20,6 +21,9 @@ export class CharacterService implements ICharacterService {
     }
 
     public async create(character: Character): Promise<Character> {
+        const existsCharacter = this._characterRepository.getByName(character.name);
+        if (existsCharacter) throw new ConflictException("There is already a character with this name");
+        
         return await this._characterRepository.create(character);
     }
 

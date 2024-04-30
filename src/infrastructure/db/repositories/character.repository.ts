@@ -15,7 +15,11 @@ export class CharacterRepository implements ICharacterRepository {
     public async create(Character: Character): Promise<Character> {
         return await this._databaseRepository.save(Character);
     }
-    
+
+    public async getByName(name: string): Promise<Character> {
+        return await this._databaseRepository.findOneBy({ name: name });
+    }
+
     public async getByUuid(uuid: string): Promise<Character> {
         return await this._databaseRepository.findOneBy({ uuid: uuid });
     }

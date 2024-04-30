@@ -4,6 +4,7 @@ import { ICreatorRepository } from "../interfaces/i.creator.repository";
 import { UpdateResult, DeleteResult } from "typeorm";
 import { Creator } from "../entities/creator.entity";
 import { TYPES } from "../../api/util/di/di-types";
+import { ConflictException } from "../exceptions/conflict.exception";
 
 @injectable()
 export class CreatorService implements ICreatorService {
@@ -20,6 +21,12 @@ export class CreatorService implements ICreatorService {
     }
 
     public async create(creator: Creator): Promise<Creator> {
+        const fullNameCreator = this._creatorRepository.getByFullName(creator.fullName);
+        if (!fullNameCreator) throw new ConflictException("There is already a creator with this name");
+
+        const sufixCreator = this._creatorRepository.getBySufix(creator.sufix);
+        if (sufixCreator) throw new ConflictException("There is already a creaor with this sufix");
+
         return await this._creatorRepository.create(creator);
     }
 

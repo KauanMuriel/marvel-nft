@@ -15,7 +15,11 @@ export class ComicRepository implements IComicRepository {
     public async create(Comic: Comic): Promise<Comic> {
         return await this._databaseRepository.save(Comic);
     }
-    
+
+    public async getByIsbn(isbn: string): Promise<Comic> {
+        return await this._databaseRepository.findOneBy({ isbn: isbn });
+    }
+
     public async getByUuid(uuid: string): Promise<Comic> {
         return await this._databaseRepository.findOneBy({ uuid: uuid });
     }

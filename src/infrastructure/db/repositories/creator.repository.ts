@@ -15,7 +15,14 @@ export class CreatorRepository implements ICreatorRepository {
     public async create(creator: Creator): Promise<Creator> {
         return await this._databaseRepository.save(creator);
     }
-    
+
+    public async getByFullName(fullName: string): Promise<Creator> {
+        return await this._databaseRepository.findOneBy({ fullName: fullName });
+    }
+    public async getBySufix(sufix: string): Promise<Creator> {
+        return await this._databaseRepository.findOneBy({ sufix: sufix });
+    }
+
     public async getByUuid(uuid: string): Promise<Creator> {
         return await this._databaseRepository.findOneBy({ uuid: uuid });
     }

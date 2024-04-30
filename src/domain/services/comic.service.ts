@@ -4,13 +4,14 @@ import { IComicRepository } from "../interfaces/i.comic.repository";
 import { UpdateResult, DeleteResult } from "typeorm";
 import { Comic } from "../entities/comic.entity";
 import { TYPES } from "../../api/util/di/di-types";
+import { ConflictException } from "../exceptions/conflict.exception";
 
 @injectable()
 export class ComicService implements IComicService {
-    private readonly _ComicRepository: IComicRepository;
+    private readonly _comicRepository: IComicRepository;
 
-    public constructor(@inject(TYPES.IComicRepository) ComicRepository: IComicRepository) {
-        this._ComicRepository = ComicRepository;
+    public constructor(@inject(TYPES.IComicRepository) comicRepository: IComicRepository) {
+        this._comicRepository = comicRepository;
 
         this.create = this.create.bind(this);
         this.update = this.update.bind(this);
@@ -19,23 +20,26 @@ export class ComicService implements IComicService {
         this.getByUuid = this.getByUuid.bind(this);
     }
 
-    create(user: Comic): Promise<Comic> {
-        throw new Error("Method not implemented.");
+    public async create(comic: Comic): Promise<Comic> {
+        const existsComic = await this._comicRepository.getByIsbn(comic.isbn);
+        if (existsComic) throw new ConflictException("There is already a comic with this isbn");
+
+        return await this._comicRepository.create(comic);
     }
 
-    getAll(): Promise<Comic[]> {
-        throw new Error("Method not implemented.");
+    public async getAll(): Promise<Comic[]> {
+        return await this._comicRepository.getAll();
     }
 
-    getByUuid(uuid: string): Promise<Comic> {
-        throw new Error("Method not implemented.");
+    public async getByUuid(uuid: string): Promise<Comic> {
+        return await this._comicRepository.getByUuid(uuid);
     }
 
-    update(Comic: Comic): Promise<UpdateResult> {
-        throw new Error("Method not implemented.");
+    public async update(comic: Comic): Promise<UpdateResult> {
+        return await this._comicRepository.update(comic);
     }
 
-    delete(uuid: string): Promise<DeleteResult> {
-        throw new Error("Method not implemented.");
+    public async delete(uuid: string): Promise<DeleteResult> {
+        return await this._comicRepository.delete(uuid);
     }
 }

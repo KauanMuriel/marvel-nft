@@ -17,7 +17,7 @@ export class UserPreferencesEntities1714418076627 implements MigrationInterface 
             name: 'character',
             columns: [
                 { name: 'uuid', type: 'uuid', isPrimary: true, isGenerated: true, generationStrategy: "uuid" },
-                { name: 'name', type: 'varchar' },
+                { name: 'name', type: 'varchar', isUnique: true },
                 { name: 'description', type: 'varchar', isNullable: true },
                 { name: 'thumbnail', type: 'varchar' }
             ]
