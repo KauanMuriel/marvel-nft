@@ -9,7 +9,7 @@ describe("/character", () => {
     })
 
     test("POST - Must fail if pass a duplicated name character", async () => {
-        const requestBody = { name: "Spider-man", description: "A man who was bitten by a spider", thumbnail: "c3BpZGVybWFu" };
+        const requestBody = { name: "Spider-Man", description: "A man who was bitten by a spider", thumbnail: "c3BpZGVybWFu" };
         const response = await app.fastify.inject({ method: "POST", url: "/character", body: requestBody });
         if (response) {
             expect(response.statusCode).toBe(409);

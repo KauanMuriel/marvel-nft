@@ -9,7 +9,7 @@ export class CharacterRepositoryMock implements ICharacterRepository {
     public constructor() {
         this.characters = [{
             uuid: "ae430434-f3d5-492f-893a-78e110211a70",
-            name: "Spider-man",
+            name: "Spider-Man",
             description: "A man who was bitten by a spider",
             thumbnail: "c3BpZGVybWFu"
         }];
