@@ -32,4 +32,7 @@ export class User {
     @OneToOne(() => Comic)
     @JoinColumn()
     comicId: string;
+
+    @Column({ type: 'boolean', default: false})
+    admin: boolean;
 }

@@ -27,8 +27,8 @@ export class UserPreferencesEntities1714418076627 implements MigrationInterface 
             name: 'comic',
             columns: [
                 { name: 'uuid', type: 'uuid', isPrimary: true, isGenerated: true, generationStrategy: "uuid" },
-                { name: 'title', type: 'varchar'},
-                { name: 'isbn', type: 'varchar'},
+                { name: 'title', type: 'varchar' },
+                { name: 'isbn', type: 'varchar' },
                 { name: 'creatorId', type: 'uuid' }
             ]
         }))
@@ -42,13 +42,14 @@ export class UserPreferencesEntities1714418076627 implements MigrationInterface 
         await queryRunner.addColumns('user', [
             new TableColumn({ name: 'creatorId', type: 'uuid' }),
             new TableColumn({ name: 'characterId', type: 'uuid' }),
-            new TableColumn({ name: 'comicId', type: 'uuid' })
+            new TableColumn({ name: 'comicId', type: 'uuid' }),
+            new TableColumn({ name: 'admin', type: 'boolean', default: false })
         ]);
 
         await queryRunner.createForeignKeys('user', [
-            new TableForeignKey({ columnNames: ['creatorId'], referencedTableName: 'creator', referencedColumnNames: ['uuid']}),
-            new TableForeignKey({ columnNames: ['characterId'], referencedTableName: 'character', referencedColumnNames: ['uuid']}),
-            new TableForeignKey({ columnNames: ['comicId'], referencedTableName: 'comic', referencedColumnNames: ['uuid']})
+            new TableForeignKey({ columnNames: ['creatorId'], referencedTableName: 'creator', referencedColumnNames: ['uuid'] }),
+            new TableForeignKey({ columnNames: ['characterId'], referencedTableName: 'character', referencedColumnNames: ['uuid'] }),
+            new TableForeignKey({ columnNames: ['comicId'], referencedTableName: 'comic', referencedColumnNames: ['uuid'] })
         ])
     }
 
