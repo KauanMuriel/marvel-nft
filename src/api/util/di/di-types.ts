@@ -1,8 +1,19 @@
 const TYPES = {
-    IUserService: Symbol.for("IUserService"),
-    IUserRepository: Symbol.for("IUserRepository"),
     IAuthService: Symbol.for("IAuthService"),
-    IAuthController: Symbol.for("IAuthController")
+    ICreatorService: Symbol.for("ICreatorService"),
+    ICharacterService: Symbol.for("ICharacterService"),
+    IComicService: Symbol.for("IComicService"),
+    IUserService: Symbol.for("IUserService"),
+
+    ICreatorRepository: Symbol.for("ICreatorRepository"),
+    ICharacterRepository: Symbol.for("ICharacterRepository"),
+    IComicRepository: Symbol.for("IComicRepository"),
+    IUserRepository: Symbol.for("IUserRepository"),
+    
+    IAuthController: Symbol.for("IAuthController"),
+    ICreatorController: Symbol.for("ICreatorController"),
+    ICharacterController: Symbol.for("ICharacterController"),
+    IComicController: Symbol.for("IComicController")
 }
 
 export { TYPES };

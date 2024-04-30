@@ -1,8 +1,9 @@
-import { Repository } from "typeorm";
+import { QueryFailedError, Repository } from "typeorm";
 import { User } from "../../../domain/entities/user.entity";
 import { AppDataSource } from "../data-source"
 import { IUserRepository } from "../../../domain/interfaces/i.user.respository";
 import { injectable } from "inversify";
+import { UnprocessableEntityException } from "../../../domain/exceptions/unprocessable-entity.exception";
 
 @injectable()
 export class UserRepository implements IUserRepository {
@@ -11,9 +12,18 @@ export class UserRepository implements IUserRepository {
     public constructor() {
         this._databaseRepository = AppDataSource.getRepository(User);
     }
+    public async findByUuid(uuid: string): Promise<User> {
+        return await this._databaseRepository.findOneBy({ uuid: uuid });
+    }
 
     public async create(user: User): Promise<User> {
-        return await this._databaseRepository.save(user);
+        try {
+            return await this._databaseRepository.save(user);
+        } catch(error) {
+            if (error instanceof QueryFailedError && error.driverError === '23503') {
+                throw new UnprocessableEntityException("The user preferences don't match with registered values");
+            }
+        }
     }
 
     public async findByEmail(email: string): Promise<User> {

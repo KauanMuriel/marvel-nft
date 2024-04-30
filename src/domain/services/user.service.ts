@@ -5,8 +5,6 @@ import { IUserService } from "../interfaces/i.user.service";
 import { IUserRepository } from "../interfaces/i.user.respository";
 import { inject, injectable } from "inversify";
 import { TYPES } from "../../api/util/di/di-types";
-import { UserRepository } from "../../infrastructure/db/repositories/user.repository";
-import { MockUserRepository } from "../../../test/mocks/user.repository.mock";
 
 @injectable()
 export class UserService implements IUserService {
