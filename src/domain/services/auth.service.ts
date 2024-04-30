@@ -20,8 +20,8 @@ export class AuthService implements IAuthService {
 
     public async signin(user: User): Promise<string> {
         const existsUser = await this._userService.getByEmail(user.email);
-
-        if (existsUser === null) {
+        
+        if (!existsUser) {
             throw new UnauthorizedException("The email or password is wrong!");
         }
 

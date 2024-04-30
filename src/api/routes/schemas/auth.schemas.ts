@@ -19,4 +19,24 @@ const signupSchema = {
     }
 };
 
-export { signupSchema }
+const signinSchema = {
+    tags: ['auth'],
+    body: {
+        type: 'object',
+        required: ['password', 'email'],
+        properties: {
+            password: { type: 'string' },
+            email: { type: 'string', format: "email" }
+        }
+    },
+    response: {
+        '200': {
+            type: 'object',
+            properties: {
+                accessToken: { type: 'string' }
+            }
+        }
+    }
+}
+
+export { signupSchema, signinSchema }

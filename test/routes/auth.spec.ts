@@ -43,3 +43,27 @@ describe("/auth/signup", () => {
         }
     })
 })
+
+describe("/auth/sigin", () => {
+    beforeAll(async () => {
+        configDotenv({path: "./.env"})
+    })
+
+    test("Must return a valid jwt if pass correct credentials", async () => {
+        const requestBody = { password: "testing123", email: "testing.br@email.com" }
+        const response = await app.fastify.inject({ method: "POST", url: "/auth/signin", body: requestBody });
+        if (response) {
+            const json = JSON.parse(response.body);
+            expect(json.accessToken).toMatch(/^[A-Za-z0-9_-]{2,}(?:\.[A-Za-z0-9_-]{2,}){2}$/);
+            expect(response.statusCode).toBe(200);
+        }
+    })
+
+    test("Must fail if pass incorrect credentials", async () => {
+        const requestBody = { password: "testing123", email: "testing.br@email.br" }
+        const response = await app.fastify.inject({ method: "POST", url: "/auth/signin", body: requestBody });
+        if (response) {
+            expect(response.statusCode).toBe(401);
+        }
+    })
+})
