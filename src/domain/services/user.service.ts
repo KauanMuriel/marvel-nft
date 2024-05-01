@@ -30,4 +30,16 @@ export class UserService implements IUserService {
     public async getByEmail(email: string): Promise<User> {
         return await this._userRepository.findByEmail(email);
     }
+
+    public async getByUuid(uuid: string): Promise<User> {
+        return await this._userRepository.findByUuid(uuid);
+    }
+
+    public async increaseBalance(user: User, value: number): Promise<void> {
+        await this._userRepository.increaseBalance(user, value);
+    }
+
+    public async decreaseBalance(user: User, value: number): Promise<void> {
+        await this._userRepository.decreaseBalance(user, value);
+    }
 }

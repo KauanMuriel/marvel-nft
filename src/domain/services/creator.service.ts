@@ -25,7 +25,7 @@ export class CreatorService implements ICreatorService {
         if (!fullNameCreator) throw new ConflictException("There is already a creator with this name");
 
         const sufixCreator = this._creatorRepository.getBySufix(creator.sufix);
-        if (sufixCreator) throw new ConflictException("There is already a creaor with this sufix");
+        if (sufixCreator) throw new ConflictException("There is already a creator with this sufix");
 
         return await this._creatorRepository.create(creator);
     }

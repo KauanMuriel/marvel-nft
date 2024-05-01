@@ -1,6 +1,6 @@
 import { compare, hash } from "bcrypt";
 import { User } from "../entities/user.entity";
-import { sign } from "jsonwebtoken";
+import { JwtPayload, decode, sign } from "jsonwebtoken";
 import { UnauthorizedException } from "../exceptions/unauthorized.exception";
 import { IAuthService } from "../interfaces/i.auth.service";
 import { IUserService } from "../interfaces/i.user.service";
@@ -31,11 +31,18 @@ export class AuthService implements IAuthService {
             throw new UnauthorizedException("The email or password is wrong!");
         }
 
-        return sign({ uuid: existsUser.uuid }, process.env.JWT_SECRET, { expiresIn: '2h'})
+        return sign({ uuid: existsUser.uuid, password: existsUser.password }, process.env.JWT_SECRET, { expiresIn: '2h'});
     }
 
     public async signup(user: User): Promise<User> {
         user.password = await hash(user.password, process.env.BCRYPT_SALT);
         return await this._userService.create(user);
+    }
+
+    public async decodeToken(accessToken: string): Promise<User> {
+        // [INCOMPLETO NECESSARIO VALIDAR O TOKEN]
+        const accessTokenData = decode(accessToken) as JwtPayload;
+        const uuid = accessTokenData.uuid;
+        return await this._userService.getByUuid(uuid);
     }
 }

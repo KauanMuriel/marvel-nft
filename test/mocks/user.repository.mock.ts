@@ -55,4 +55,12 @@ export class UserRepositoryMock implements IUserRepository {
             resolve(this.users.find((user) => user.uuid === uuid));
         })
     }
+
+    public async increaseBalance(user: User, value: number): Promise<void> {
+        throw new Error("Method not implemented.");
+    }
+
+    public async decreaseBalance(user: User, value: number): Promise<void> {
+        throw new Error("Method not implemented.");
+    }
 }
