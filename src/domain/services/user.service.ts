@@ -15,7 +15,10 @@ export class UserService implements IUserService {
         this._userRepository = userRepository;
 
         this.create = this.create.bind(this);
+        this.getByUuid = this.getByUuid.bind(this);
         this.getByEmail = this.getByEmail.bind(this);
+        this.increaseBalance = this.increaseBalance.bind(this);
+        this.decreaseBalance = this.decreaseBalance.bind(this);
     }
 
     public async create(user: User): Promise<User> {

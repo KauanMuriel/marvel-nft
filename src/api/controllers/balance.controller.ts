@@ -2,21 +2,19 @@ import { FastifyReply, FastifyRequest } from "fastify";
 import { inject, injectable } from "inversify";
 import { IBalanceController } from "../interfaces/i.balance.controller";
 import { IBalanceService } from "../../domain/interfaces/i.balance.service";
-import { IUserService } from "../../domain/interfaces/i.user.service";
-import { JwtPayload, decode } from "jsonwebtoken";
-import { IAuthService } from "../../domain/interfaces/i.auth.service";
 import { TYPES } from "../util/di/di-types";
 import { JWTHelper } from "../util/jwt";
-import { User } from "../../domain/entities/user.entity";
 
 @injectable()
 export class BalanceController implements IBalanceController {
     private readonly _balanceService: IBalanceService;
-    private readonly _authService: IAuthService;
 
-    public constructor(@inject(TYPES.IBalanceService) balanceService: IBalanceService, @inject(TYPES.IAuthService) authService: IAuthService) {
+    public constructor(@inject(TYPES.IBalanceService) balanceService: IBalanceService) {
         this._balanceService = balanceService;
-        this._authService = authService;
+
+        this.get = this.get.bind(this);
+        this.deposit = this.deposit.bind(this);
+        this.withdraw = this.withdraw.bind(this);
     }
     
     public async get(request: FastifyRequest, reply: FastifyReply): Promise<FastifyReply> {

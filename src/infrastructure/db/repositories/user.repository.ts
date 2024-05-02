@@ -41,5 +41,4 @@ export class UserRepository implements IUserRepository {
         user.balance - value;
         await this._databaseRepository.save(user);
     }
-
 }

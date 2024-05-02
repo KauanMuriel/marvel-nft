@@ -27,7 +27,8 @@ export class UserRepositoryMock implements IUserRepository {
             username: "kauan.rossi",
             password: "testing123",
             email: "testing.br@email.com",
-            balance: 100
+            balance: 100,
+            admin: true
         } as User];
     }
 
@@ -56,24 +57,24 @@ export class UserRepositoryMock implements IUserRepository {
         })
     }
 
-    public async getBalance(user: User): Promise<number>{
+    public async getBalance(uuid: string): Promise<number>{
         return new Promise((resolve, reject) => {
-            const searchedUserIndex = this.users.findIndex((user) => user.uuid == user.uuid);
+            const searchedUserIndex = this.users.findIndex((user) => user.uuid == uuid);
             resolve(this.users[searchedUserIndex].balance);
         })
     }
 
     public async increaseBalance(uuid: string, value: number): Promise<void> {
         return new Promise((resolve, reject) => {
-            const searchedUserIndex = this.users.findIndex((user) => user.uuid == user.uuid);
+            const searchedUserIndex = this.users.findIndex((user) => user.uuid == uuid);
             this.users[searchedUserIndex].balance + value;
             resolve()
         });
     }
 
-    public async decreaseBalance(user: User, value: number): Promise<void> {
+    public async decreaseBalance(uuid: string, value: number): Promise<void> {
         return new Promise((resolve, reject) => {
-            const searchedUserIndex = this.users.findIndex((user) => user.uuid == user.uuid);
+            const searchedUserIndex = this.users.findIndex((user) => user.uuid == uuid);
             this.users[searchedUserIndex].balance - value;
             resolve()
         });

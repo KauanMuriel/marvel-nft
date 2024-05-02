@@ -12,6 +12,12 @@ export class CharacterController implements ICharacterController {
 
     public constructor(@inject(TYPES.ICharacterService) characterService: ICharacterService) {
         this._characterService = characterService;
+
+        this.getAll = this.getAll.bind(this);
+        this.update = this.update.bind(this);
+        this.create = this.create.bind(this);
+        this.update = this.update.bind(this);
+        this.getById = this.getById.bind(this);
     }
 
     public async getAll(request: FastifyRequest, reply: FastifyReply): Promise<FastifyReply> {
@@ -36,6 +42,6 @@ export class CharacterController implements ICharacterController {
 
     public async create(request: FastifyRequest, reply: FastifyReply): Promise<FastifyReply> {
         const createdUser = await this._characterService.create(request.body as Character);
-        return reply.send(createdUser);
+        return reply.status(201).send(createdUser);
     }
 }

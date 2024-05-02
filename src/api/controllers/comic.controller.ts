@@ -12,6 +12,12 @@ export class ComicController implements IComicController {
 
     public constructor(@inject(TYPES.IComicService) ComicService: IComicService) {
         this._comicService = ComicService;
+
+        this.getAll = this.getAll.bind(this);
+        this.update = this.update.bind(this);
+        this.create = this.create.bind(this);
+        this.update = this.update.bind(this);
+        this.getById = this.getById.bind(this);
     }
 
     public async getAll(request: FastifyRequest, reply: FastifyReply): Promise<FastifyReply> {

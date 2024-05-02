@@ -20,7 +20,7 @@ export class CharacterService implements ICharacterService {
     }
 
     public async create(character: Character): Promise<Character> {
-        const existsCharacter = this._characterRepository.getByName(character.name);
+        const existsCharacter = await this._characterRepository.getByName(character.name);
         if (existsCharacter) throw new ConflictException("There is already a character with this name");
         
         return await this._characterRepository.create(character);
