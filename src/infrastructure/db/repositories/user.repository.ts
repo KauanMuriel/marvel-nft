@@ -29,4 +29,16 @@ export class UserRepository implements IUserRepository {
     public async findByEmail(email: string): Promise<User> {
         return await this._databaseRepository.findOneBy({ email: email });
     }
+
+    public async increaseBalance(uuid: string, value: number): Promise<void> {
+        const user =  await this.findByUuid(uuid);
+        user.balance + value;
+        await this._databaseRepository.save(user);
+    }
+
+    public async decreaseBalance(uuid: string, value: number): Promise<void> {
+        const user =  await this.findByUuid(uuid);
+        user.balance - value;
+        await this._databaseRepository.save(user);
+    }
 }

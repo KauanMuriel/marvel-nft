@@ -14,6 +14,8 @@ import { ICharacterController } from "./api/interfaces/i.character.controller";
 import { IComicController } from "./api/interfaces/i.comic.controller";
 import { configureCharacterRoutes } from "./api/routes/character.routes";
 import { configureComicRoutes } from "./api/routes/comic.routes";
+import { IBalanceController } from "./api/interfaces/i.balance.controller";
+import { configureBalanceRoutes } from "./api/routes/balance.routes";
 
 const swaggerUiOptions = { routePrefix: "/docs" };
 const swaggerOptions = {
@@ -44,6 +46,7 @@ class App {
     private readonly _creatorController: ICreatorController;
     private readonly _characterController: ICharacterController;
     private readonly _comicController: IComicController;
+    private readonly _balanceController: IBalanceController;
 
     public constructor() {
         this.fastify = fastify();
@@ -53,6 +56,7 @@ class App {
         this._creatorController = this.container.get<ICreatorController>(TYPES.ICreatorController);
         this._characterController = this.container.get<ICharacterController>(TYPES.ICharacterController);
         this._comicController = this.container.get<IComicController>(TYPES.IComicController);
+        this._balanceController = this.container.get<IBalanceController>(TYPES.IBalanceController);
         this.configureCookies();
         this.configureSwagger();
         this.configureRoutes();
@@ -63,6 +67,7 @@ class App {
         configureCreatorRoutes(this.fastify, this._creatorController);
         configureCharacterRoutes(this.fastify, this._characterController);
         configureComicRoutes(this.fastify, this._comicController);
+        configureBalanceRoutes(this.fastify, this._balanceController);
         configureHealthCheckRoutes(this.fastify);
     }
 

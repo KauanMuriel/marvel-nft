@@ -22,13 +22,14 @@ export class UserRepositoryMock implements IUserRepository {
         this._characterRepository = characterRepository;
         this._comicRepository = comicRepository;
         this._creatorRepository = creatorRepository;
-        this.users = [];
-        this.users.push({
+        this.users = [{
             uuid: "ae430434-f3d5-492f-893a-78e110211a70",
             username: "kauan.rossi",
             password: "testing123",
-            email: "testing.br@email.com"
-        } as User);
+            email: "testing.br@email.com",
+            balance: 100,
+            admin: true
+        } as User];
     }
 
     public async create(user: User): Promise<User> {
@@ -54,5 +55,28 @@ export class UserRepositoryMock implements IUserRepository {
         return new Promise((resolve, reject) => {
             resolve(this.users.find((user) => user.uuid === uuid));
         })
+    }
+
+    public async getBalance(uuid: string): Promise<number>{
+        return new Promise((resolve, reject) => {
+            const searchedUserIndex = this.users.findIndex((user) => user.uuid == uuid);
+            resolve(this.users[searchedUserIndex].balance);
+        })
+    }
+
+    public async increaseBalance(uuid: string, value: number): Promise<void> {
+        return new Promise((resolve, reject) => {
+            const searchedUserIndex = this.users.findIndex((user) => user.uuid == uuid);
+            this.users[searchedUserIndex].balance + value;
+            resolve()
+        });
+    }
+
+    public async decreaseBalance(uuid: string, value: number): Promise<void> {
+        return new Promise((resolve, reject) => {
+            const searchedUserIndex = this.users.findIndex((user) => user.uuid == uuid);
+            this.users[searchedUserIndex].balance - value;
+            resolve()
+        });
     }
 }
