@@ -18,5 +18,5 @@ export class Comic {
 
     @OneToOne(() => Creator)
     @JoinColumn()
-    creatorId: string;
+    creator: string;
 }

@@ -12,6 +12,12 @@ export class ComicController implements IComicController {
 
     public constructor(@inject(TYPES.IComicService) ComicService: IComicService) {
         this._comicService = ComicService;
+
+        this.getAll = this.getAll.bind(this);
+        this.getById = this.getById.bind(this);
+        this.create = this.create.bind(this);
+        this.delete = this.delete.bind(this);
+        this.update = this.update.bind(this);
     }
 
     public async getAll(request: FastifyRequest, reply: FastifyReply): Promise<FastifyReply> {
@@ -20,6 +26,7 @@ export class ComicController implements IComicController {
     }
     
     public async getById(request: FastifyRequest, reply: FastifyReply): Promise<FastifyReply> {
+        console.log(request.params)
         const comic = await this._comicService.getByUuid(request.params['uuid'])
         return reply.send(comic);
     }

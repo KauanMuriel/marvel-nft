@@ -2,8 +2,8 @@ import { FastifyReply, FastifyRequest } from "fastify";
 import { verify } from "jsonwebtoken";
 
 export async function authenticate(request: FastifyRequest, reply: FastifyReply) {
-    const authorization = request.cookies['access_token'];
-    
+    const authorization = request.headers.authorization;
+    console.log(authorization)
     if (authorization === '' || authorization === null || !authorization) {
         return reply.status(401).send({ message: "Authentication required"});
     }

@@ -23,15 +23,15 @@ export class User {
 
     @OneToOne(() => Creator)
     @JoinColumn()
-    creatorId: string;
+    favoriteCreator?: string;
 
     @OneToOne(() => Character)
     @JoinColumn()
-    characterId: string;
+    favoriteCharacter?: string;
 
     @OneToOne(() => Comic)
     @JoinColumn()
-    comicId: string;
+    favoriteComic?: string;
 
     @Column({ type: 'boolean', default: false})
     admin: boolean;
