@@ -22,13 +22,13 @@ export class UserRepositoryMock implements IUserRepository {
         this._characterRepository = characterRepository;
         this._comicRepository = comicRepository;
         this._creatorRepository = creatorRepository;
-        this.users = [];
-        this.users.push({
+        this.users = [{
             uuid: "ae430434-f3d5-492f-893a-78e110211a70",
             username: "kauan.rossi",
             password: "testing123",
-            email: "testing.br@email.com"
-        } as User);
+            email: "testing.br@email.com",
+            balance: 100
+        } as User];
     }
 
     public async create(user: User): Promise<User> {
@@ -56,11 +56,26 @@ export class UserRepositoryMock implements IUserRepository {
         })
     }
 
-    public async increaseBalance(user: User, value: number): Promise<void> {
-        throw new Error("Method not implemented.");
+    public async getBalance(user: User): Promise<number>{
+        return new Promise((resolve, reject) => {
+            const searchedUserIndex = this.users.findIndex((user) => user.uuid == user.uuid);
+            resolve(this.users[searchedUserIndex].balance);
+        })
+    }
+
+    public async increaseBalance(uuid: string, value: number): Promise<void> {
+        return new Promise((resolve, reject) => {
+            const searchedUserIndex = this.users.findIndex((user) => user.uuid == user.uuid);
+            this.users[searchedUserIndex].balance + value;
+            resolve()
+        });
     }
 
     public async decreaseBalance(user: User, value: number): Promise<void> {
-        throw new Error("Method not implemented.");
+        return new Promise((resolve, reject) => {
+            const searchedUserIndex = this.users.findIndex((user) => user.uuid == user.uuid);
+            this.users[searchedUserIndex].balance - value;
+            resolve()
+        });
     }
 }

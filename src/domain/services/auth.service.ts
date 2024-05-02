@@ -18,31 +18,31 @@ export class AuthService implements IAuthService {
         this.signin = this.signin.bind(this);
     }
 
-    public async signin(user: User): Promise<string> {
-        const existsUser = await this._userService.getByEmail(user.email);
-        
+    private async validateCredentials(stranger: User, existsUser: User): Promise<void> {
         if (!existsUser) {
             throw new UnauthorizedException("The email or password is wrong!");
         }
 
-        const passwordHashed = await hash(user.password, process.env.BCRYPT_SALT);
+        const passwordHashed = await hash(stranger.password, process.env.BCRYPT_SALT);
 
         if (!await compare(existsUser.password, passwordHashed)) {
             throw new UnauthorizedException("The email or password is wrong!");
         }
+    }
 
+    public async signin(stranger: User): Promise<string> {
+        const existsUser = await this._userService.getByEmail(stranger.email);
+        await this.validateCredentials(stranger, existsUser);
         return sign({ uuid: existsUser.uuid, password: existsUser.password }, process.env.JWT_SECRET, { expiresIn: '2h'});
+    }
+
+    public async validateTokenCredentials(userUuid: string, password: string) {
+        const existsUser = await this._userService.getByUuid(userUuid);
+        this.validateCredentials({ password: password} as User, existsUser);
     }
 
     public async signup(user: User): Promise<User> {
         user.password = await hash(user.password, process.env.BCRYPT_SALT);
         return await this._userService.create(user);
-    }
-
-    public async decodeToken(accessToken: string): Promise<User> {
-        // [INCOMPLETO NECESSARIO VALIDAR O TOKEN]
-        const accessTokenData = decode(accessToken) as JwtPayload;
-        const uuid = accessTokenData.uuid;
-        return await this._userService.getByUuid(uuid);
     }
 }

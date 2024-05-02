@@ -21,16 +21,16 @@ export class BalanceService implements IBalanceService {
         this.deposit = this.deposit.bind(this);
     }
 
-    public async get(user: User): Promise<number> {
-        const balance = user.balance
-        return balance
+    public async get(uuid: string): Promise<number> {
+        const balance = (await this._userService.getByUuid(uuid)).balance;
+        return balance;
     }
 
-    public async withdraw(user: User, value: number): Promise<void> {
-        await this._userService.increaseBalance(user, value);
+    public async withdraw(uuid: string, value: number): Promise<void> {
+        await this._userService.increaseBalance(uuid, value);
     }
 
-    public async deposit(user: User, value: number): Promise<void> {
-        await this._userService.decreaseBalance(user, value);
+    public async deposit(uuid: string, value: number): Promise<void> {
+        await this._userService.decreaseBalance(uuid, value);
     }
 }

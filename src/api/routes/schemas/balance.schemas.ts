@@ -1,4 +1,4 @@
-const getBalanceSchema = {
+const balanceSchema = {
     type: 'object',
     required: ['value'],
     properties: {
@@ -6,4 +6,4 @@ const getBalanceSchema = {
     }
 };
 
-export { getBalanceSchema };
+export { balanceSchema };
