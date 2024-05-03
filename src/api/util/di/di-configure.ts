@@ -17,11 +17,10 @@ import { IComicController } from "../../interfaces/i.comic.controller";
 import { IBalanceService } from "../../../domain/interfaces/i.balance.service";
 import { IBalanceController } from "../../interfaces/i.balance.controller";
 import { CreatorService, ComicService, CharacterService, AuthService, UserService, BalanceService, TokenService } from "../../../domain/services/index";
-import { CharacterController, CreatorController, ComicController, AuthController, BalanceController } from "../../controllers/index";
+import { CharacterController, CreatorController, ComicController, AuthController, BalanceController, TokenController } from "../../controllers/index";
 import { CharacterRepository, CreatorRepository, ComicRepository, UserRepository, TokenRepository } from "../../../infrastructure/db/repositories/index";
-import { ComicRepositoryMock, CharacterRepositoryMock, CreatorRepositoryMock, UserRepositoryMock } from "../../../../test/mocks/index";
+import { ComicRepositoryMock, CharacterRepositoryMock, CreatorRepositoryMock, UserRepositoryMock, TokenRepositoryMock } from "../../../../test/mocks/index";
 import { ITokenController } from "../../interfaces/i.token.controller";
-import { TokenController } from "../../controllers/token.controller";
 import { ITokenRepository } from "../../../domain/interfaces/i.token.repository";
 import { ITokenService } from "../../../domain/interfaces/i.token.service";
 
@@ -46,6 +45,7 @@ function configureDependencyContainer(container: Container) {
         container.bind<ICreatorRepository>(TYPES.ICreatorRepository).to(CreatorRepositoryMock);
         container.bind<ICharacterRepository>(TYPES.ICharacterRepository).to(CharacterRepositoryMock)
         container.bind<IComicRepository>(TYPES.IComicRepository).to(ComicRepositoryMock);
+        container.bind<ITokenRepository>(TYPES.ITokenRepository).to(TokenRepositoryMock);
     } else {
         container.bind<IUserRepository>(TYPES.IUserRepository).to(UserRepository).inSingletonScope();
         container.bind<ICreatorRepository>(TYPES.ICreatorRepository).to(CreatorRepository).inSingletonScope();
