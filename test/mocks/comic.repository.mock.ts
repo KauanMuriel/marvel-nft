@@ -12,14 +12,16 @@ export class ComicRepositoryMock implements IComicRepository {
             isbn: "978-1302923730",
             title: "Spider-Man #1",
             variantDescription: "director’s cut",
-            creatorId: "5e3a9c10-a900-4ffb-ab22-5af49b8ac0ec"
+            creator: "5e3a9c10-a900-4ffb-ab22-5af49b8ac0ec"
         }];
     }
     create(Comic: Comic): Promise<Comic> {
         throw new Error("Method not implemented.");
     }
     getAll(): Promise<Comic[]> {
-        throw new Error("Method not implemented.");
+        return new Promise((resolve, reject) => {
+            resolve(this.comics);
+        });
     }
     getByUuid(uuid: string): Promise<Comic> {
         return new Promise((resolve, reject) => {

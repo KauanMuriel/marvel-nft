@@ -26,6 +26,7 @@ export class ComicController implements IComicController {
     }
     
     public async getById(request: FastifyRequest, reply: FastifyReply): Promise<FastifyReply> {
+        console.log(request.params)
         const comic = await this._comicService.getByUuid(request.params['uuid'])
         return reply.send(comic);
     }

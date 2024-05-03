@@ -9,7 +9,13 @@ describe("/auth/signup", () => {
     })
     
     test("Must fail if don't pass email", async () => {
-        const requestBody = { username: "kauan.rossi", password: "testing123"};
+        const requestBody = {
+            username: "kauan.test",
+            password: "testing123",
+            favoriteCreator: "5e3a9c10-a900-4ffb-ab22-5af49b8ac0ec",
+            favoriteComic: "10908bca-734f-4c17-be24-22bd4db4b2eb",
+            favoriteCharacter: "ae430434-f3d5-492f-893a-78e110211a70"
+        }
         const response = await app.fastify.inject({ method: "POST", url: "/auth/signup", body: requestBody});
         if (response) {
             expect(response.statusCode).toBe(400);
@@ -17,7 +23,13 @@ describe("/auth/signup", () => {
     })
 
     test("Must fail if don't pass password", async () => {
-        const requestBody = { username: "kauan.rossi", email: "testing.br@email.com"};
+        const requestBody = {
+            username: "kauan.test",
+            email: "testing.br@testing.com",
+            favoriteCreator: "5e3a9c10-a900-4ffb-ab22-5af49b8ac0ec",
+            favoriteComic: "10908bca-734f-4c17-be24-22bd4db4b2eb",
+            favoriteCharacter: "ae430434-f3d5-492f-893a-78e110211a70"
+        }
         const response = await app.fastify.inject({ method: "POST", url: "/auth/signup", body: requestBody});
         if (response) {
             expect(response.statusCode).toBe(400);
@@ -29,9 +41,9 @@ describe("/auth/signup", () => {
             username: "kauan.test",
             password: "testing123",
             email: "testing.br@email.com",
-            creatorId: "5e3a9c10-a900-4ffb-ab22-5af49b8ac0ec",
-            comicId: "10908bca-734f-4c17-be24-22bd4db4b2eb",
-            characterId: "ae430434-f3d5-492f-893a-78e110211a70"
+            favoriteCreator: "5e3a9c10-a900-4ffb-ab22-5af49b8ac0ec",
+            favoriteComic: "10908bca-734f-4c17-be24-22bd4db4b2eb",
+            favoriteCharacter: "ae430434-f3d5-492f-893a-78e110211a70"
         }
         const response = await app.fastify.inject({ method: "POST", url: "/auth/signup", body: requestBody });
         if (response) {
@@ -44,9 +56,9 @@ describe("/auth/signup", () => {
             username: "kauan.test",
             password: "testing123",
             email: "testing.br@testing.com",
-            creatorId: "163e30ed-5914-490b-8f30-7db15f4d7b6b",
-            comicId: "9238faad-b360-4df2-8c29-635a6eb1db83",
-            characterId: "be366ab7-34ce-4369-ad24-a9d4ff82d509"
+            favoriteCreator: "163e30ed-5914-490b-8f30-7db15f4d7b6b",
+            favoriteComic: "9238faad-b360-4df2-8c29-635a6eb1db83",
+            favoriteCharacter: "be366ab7-34ce-4369-ad24-a9d4ff82d509"
         }
         const response = await app.fastify.inject({ method: "POST", url: "/auth/signup", body: requestBody });
         if (response) {
@@ -59,9 +71,9 @@ describe("/auth/signup", () => {
             username: "kauan.test",
             password: "testing123",
             email: "testing.br@testing.com",
-            creatorId: "5e3a9c10-a900-4ffb-ab22-5af49b8ac0ec",
-            comicId: "10908bca-734f-4c17-be24-22bd4db4b2eb",
-            characterId: "ae430434-f3d5-492f-893a-78e110211a70"
+            favoriteCreator: "5e3a9c10-a900-4ffb-ab22-5af49b8ac0ec",
+            favoriteComic: "10908bca-734f-4c17-be24-22bd4db4b2eb",
+            favoriteCharacter: "ae430434-f3d5-492f-893a-78e110211a70"
         }
         const response = await app.fastify.inject({ method: "POST", url: "/auth/signup", body: requestBody });
         if (response) {

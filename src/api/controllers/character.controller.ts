@@ -14,10 +14,10 @@ export class CharacterController implements ICharacterController {
         this._characterService = characterService;
 
         this.getAll = this.getAll.bind(this);
-        this.update = this.update.bind(this);
-        this.create = this.create.bind(this);
-        this.update = this.update.bind(this);
         this.getById = this.getById.bind(this);
+        this.create = this.create.bind(this);
+        this.delete = this.delete.bind(this);
+        this.update = this.update.bind(this);
     }
 
     public async getAll(request: FastifyRequest, reply: FastifyReply): Promise<FastifyReply> {

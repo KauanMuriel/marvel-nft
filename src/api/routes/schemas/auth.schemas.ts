@@ -2,13 +2,13 @@ const signupSchema = {
     tags: ['auth'],
     body: {
         type: 'object',
-        required: ['username', 'password', 'email', 'creatorId', 'characterId', 'comicId'],
+        required: ['username', 'password', 'email', 'favoriteCreator', 'favoriteCharacter', 'favoriteComic'],
         properties: {
             username: { type: 'string', minLength: 8 },
             password: { type: 'string', minLength: 8 },
-            creatorId: { type: 'string', format: 'uuid' },
-            characterId: { type: 'string', format: 'uuid'},
-            comicId: { type: 'string', format: 'uuid' },
+            favoriteCharacter: { type: 'string', format: 'uuid'},
+            favoriteCreator: { type: 'string', format: 'uuid' },
+            favoriteComic: { type: 'string', format: 'uuid' },
             email: { type: 'string', format: "email" }
         }
     },
