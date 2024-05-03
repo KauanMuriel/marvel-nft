@@ -24,14 +24,9 @@ Abaixo as funcionalidades dos usuários que foram mapeadas até o momento.
   - O token gerado é armazenado no banco de dados e atrelado ao usuário que o minerou.
 - Vender tokens
   - O usuário é capaz de anunciar os seus tokens em um marketplace onde outros usuários podem compra-lo.
-  - O anuncio pode ser um comum, fixo com valor definido.
-  - O anuncio pode ser do tipo leilão, onde os usuários podem fazer lances de preços a determinado produto.
-  - O usuário é capaz de vender o seu token a outro usário.
-- Trocar tokens
-  - O usuário é capaz de trocar os seus tokens com outros usuários.
+  - O anuncio possui um valor fixo com valor definido.
 - Comprar tokens
   - O usuário é capaz de adquirir novos tokens por meio de seu dinheiro na plataforma.
-  - O usuário pode fazer lances em leilões para adquirir novos tokens.
 - Obter detalhes do conteúdo do token
   - O usuário pode visualizar os detalhes de um tokens.
   - Os dados podem ser do seu token ou de tokens de outros usuários.
