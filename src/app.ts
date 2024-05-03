@@ -18,6 +18,8 @@ import { IBalanceController } from "./api/interfaces/i.balance.controller";
 import { configureBalanceRoutes } from "./api/routes/balance.routes";
 import { ITokenController } from "./api/interfaces/i.token.controller";
 import { configureTokenRoutes } from "./api/routes/token.routes";
+import { IMarketplaceController } from "./api/interfaces/i.marketplace.controller";
+import { configureMarketplaceRoutes } from "./api/routes/marketplace.routes";
 
 const swaggerUiOptions = { routePrefix: "/docs" };
 const swaggerOptions = {
@@ -50,6 +52,7 @@ class App {
     private readonly _comicController: IComicController;
     private readonly _balanceController: IBalanceController;
     private readonly _tokenController: ITokenController;
+    private readonly _marketplaceController: IMarketplaceController;
 
     public constructor() {
         this.fastify = fastify();
@@ -61,6 +64,7 @@ class App {
         this._comicController = this.container.get<IComicController>(TYPES.IComicController);
         this._balanceController = this.container.get<IBalanceController>(TYPES.IBalanceController);
         this._tokenController = this.container.get<ITokenController>(TYPES.ITokenController);
+        this._marketplaceController = this.container.get<IMarketplaceController>(TYPES.IMarketplaceController);
         this.configureCookies();
         this.configureSwagger();
         this.configureRoutes();
@@ -73,6 +77,7 @@ class App {
         configureComicRoutes(this.fastify, this._comicController);
         configureBalanceRoutes(this.fastify, this._balanceController);
         configureTokenRoutes(this.fastify, this._tokenController);
+        configureMarketplaceRoutes(this.fastify, this._marketplaceController);
         configureHealthCheckRoutes(this.fastify);
     }
 

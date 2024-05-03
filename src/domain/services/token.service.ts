@@ -22,6 +22,7 @@ export class TokenService implements ITokenService {
 
         const token = {
             contentType: contentType,
+            contentId: content.id,
             contentData: this.createJsonObject(content),
             owner: { uuid: userUuid }
         } as Token;
@@ -37,14 +38,15 @@ export class TokenService implements ITokenService {
         const randomContent = this.generateRandomContentType();
         const randomId = this.generateRandomId(randomContent);
 
-        const marvelUrl = this.generateMarvelUrl(randomContent.toLowerCase(), randomId);
-        console.log(marvelUrl);
-        const response = await fetch(marvelUrl);
+        const existsToken = await this._tokenRepository.getByContent(randomId, randomContent);
+        if (existsToken) throw new BadRequestException("Insufficient effort");
 
+        const marvelUrl = this.generateMarvelUrl(randomContent.toLowerCase(), randomId);
+        
+        const response = await fetch(marvelUrl);
         if (!response.ok) throw new BadRequestException("Insufficient effort");
 
         const json = await response.json();
-
         const rawContent = json.data.results[0];
         return { rawContent: rawContent, contentType: randomContent };
     }
@@ -56,8 +58,14 @@ export class TokenService implements ITokenService {
         return marvelUrl;
     }
 
-    private createJsonObject(content: any) {
-        const contentString = JSON.stringify(content);
+    private createJsonObject(oldContent: any) {
+        const newContent: object = {};
+        for (const [key, value] of Object.entries(oldContent)) {
+            if (key !== 'id') {
+                newContent[key] = value;
+            }
+        }
+        const contentString = JSON.stringify(newContent);
         const contentJson = JSON.parse(contentString);
         return contentJson;
     }
