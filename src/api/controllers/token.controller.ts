@@ -3,6 +3,7 @@ import { ITokenController } from "../interfaces/i.token.controller";
 import { inject, injectable } from "inversify";
 import { TYPES } from "../util/di/di-types";
 import { ITokenService } from "../../domain/interfaces/i.token.service";
+import { JWTHelper } from "../util/jwt";
 
 @injectable()
 export class TokenController implements ITokenController {
@@ -16,7 +17,9 @@ export class TokenController implements ITokenController {
     }
 
     public async mine(request: FastifyRequest, reply: FastifyReply): Promise<FastifyReply> {
-        const generatedToken = await this._tokenService.mine("23");
+        const jwt = JWTHelper.getJWTFromRequest(request);
+        const { uuid } = JWTHelper.decodeToken(jwt);
+        const generatedToken = await this._tokenService.mine(uuid);
         return reply.status(201).send(generatedToken);
     }
 

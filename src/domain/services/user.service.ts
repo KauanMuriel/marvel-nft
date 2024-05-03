@@ -5,7 +5,7 @@ import { IUserService } from "../interfaces/i.user.service";
 import { IUserRepository } from "../interfaces/i.user.respository";
 import { inject, injectable } from "inversify";
 import { TYPES } from "../../api/util/di/di-types";
-import { BadRequest } from "../exceptions/bad-request.exception";
+import { BadRequestException } from "../exceptions/bad-request.exception";
 
 @injectable()
 export class UserService implements IUserService {
@@ -40,18 +40,18 @@ export class UserService implements IUserService {
     }
 
     public async increaseBalance(uuid: string, value: number): Promise<void> {
-        if (value == 0){ throw new BadRequest("Increase value cannot be zero.")};
-        if (value < 0){ throw new BadRequest("Increase value must be positive.")};
+        if (value == 0){ throw new BadRequestException("Increase value cannot be zero.")};
+        if (value < 0){ throw new BadRequestException("Increase value must be positive.")};
 
         await this._userRepository.increaseBalance(uuid, value);
     }
 
     public async decreaseBalance(uuid: string, value: number): Promise<void> {
-        if (value == 0){ throw new BadRequest("Decrease value cannot be zero.")};
-        if (value < 0){ throw new BadRequest("Decrease value must be positive.")};
+        if (value == 0){ throw new BadRequestException("Decrease value cannot be zero.")};
+        if (value < 0){ throw new BadRequestException("Decrease value must be positive.")};
 
         const user = await this.getByUuid(uuid);
-        if (value > user.balance){ throw new BadRequest("Insufficient funds")};
+        if (value > user.balance){ throw new BadRequestException("Insufficient funds")};
 
         await this._userRepository.decreaseBalance(uuid, value);
     }

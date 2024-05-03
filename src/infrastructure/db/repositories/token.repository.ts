@@ -2,7 +2,9 @@ import { Repository } from "typeorm";
 import { ITokenRepository } from "../../../domain/interfaces/i.token.repository";
 import { Token } from "../../../domain/entities/token.entity";
 import { AppDataSource } from "../data-source";
+import { injectable } from "inversify";
 
+@injectable()
 export class TokenRepository implements ITokenRepository {
     private readonly _databaseRepository: Repository<Token>;
 

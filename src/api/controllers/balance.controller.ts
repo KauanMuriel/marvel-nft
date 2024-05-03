@@ -19,7 +19,7 @@ export class BalanceController implements IBalanceController {
     
     public async get(request: FastifyRequest, reply: FastifyReply): Promise<FastifyReply> {
         const accessToken = request.headers.authorization;
-        const { uuid } = await JWTHelper.decodeToken(accessToken);
+        const { uuid } = JWTHelper.decodeToken(accessToken);
 
         const balance = await this._balanceService.get(uuid);
         return reply.send( { balance : balance } );
@@ -27,7 +27,7 @@ export class BalanceController implements IBalanceController {
 
     public async withdraw(request: FastifyRequest, reply: FastifyReply): Promise<FastifyReply> {
         const accessToken = request.headers.authorization;
-        const { uuid } = await JWTHelper.decodeToken(accessToken);
+        const { uuid } = JWTHelper.decodeToken(accessToken);
         const value = request.body['value'];
 
         await this._balanceService.withdraw(uuid, value);
@@ -36,7 +36,7 @@ export class BalanceController implements IBalanceController {
 
     public async deposit(request: FastifyRequest, reply: FastifyReply): Promise<FastifyReply> {
         const accessToken = request.headers.authorization;
-        const { uuid } = await JWTHelper.decodeToken(accessToken);
+        const { uuid } = JWTHelper.decodeToken(accessToken);
         const value = request.body['value'];
 
         await this._balanceService.deposit(uuid, value);
