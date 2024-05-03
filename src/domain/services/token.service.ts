@@ -23,7 +23,7 @@ export class TokenService implements ITokenService {
         const token = {
             contentType: contentType,
             contentData: this.createJsonObject(content),
-            owner: userUuid
+            owner: { uuid: userUuid }
         } as Token;
 
         return await this._tokenRepository.create(token);
@@ -38,10 +38,11 @@ export class TokenService implements ITokenService {
         const randomId = this.generateRandomId(randomContent);
 
         const marvelUrl = this.generateMarvelUrl(randomContent.toLowerCase(), randomId);
+        console.log(marvelUrl);
         const response = await fetch(marvelUrl);
 
         if (!response.ok) throw new BadRequestException("Insufficient effort");
-        
+
         const json = await response.json();
 
         const rawContent = json.data.results[0];
@@ -68,40 +69,46 @@ export class TokenService implements ITokenService {
     }
 
     private generateRandomId(type: ContentType) {
-        const rangeIdLimits = { "Creator": 4000, "Character": 11000, "Comics": 8500};
-        return Math.floor(Math.random() * rangeIdLimits[type.toString()]).toString();
+        const rangeIdLimits = { 
+            "Creator": { max: 4000, min: 0 },
+            "Character": { max: 1020000, min: 1000000 },
+            "Comic": { max: 8500, min: 0 }
+        };
+        const typeRange = rangeIdLimits[type.toString()];
+        const randomNumber = Math.floor(Math.random() * (typeRange.max - typeRange.min + 1)) + typeRange.min;
+        return randomNumber.toString();
     }
 
     private mapRawContentAccordingType(type: ContentType, rawContent: any) {
-        console.log("TYPE - ", type)
         switch (type) {
             case ContentType.CHARACTER:
-                console.log("CHARACTER")
+                let characterComics = [];
+                if (rawContent.comics.available > 0) {
+                    characterComics = rawContent.comics.items.map((comic: any) => { return { id: comic.resourceURI } });
+                }
                 return Object.assign({}, {
                     id: rawContent.id,
                     name: rawContent.name,
                     description: rawContent.description,
                     thumbnail: rawContent.thumbnail.path,
-                    comics: rawContent.comics.map((comic: any) => { return { id: comic.resourceUri } })
+                    comics: characterComics
                 });
             case ContentType.CREATOR:
-                console.log("CREATOR")
-                let comics = [];
+                let creatorComics = [];
                 if (rawContent.comics.available > 0) {
-                    comics = rawContent.comics.items.map((comic: any) => { return { id: comic.resourceUri } })
+                    creatorComics = rawContent.comics.items.map((comic: any) => { return { id: comic.resourceURI } })
                 }
                 return Object.assign({}, {
                     id: rawContent.id,
                     fullname: rawContent.fullname,
                     thumbnail: rawContent.thumbnail.path,
                     sufix: rawContent.sufix,
-                    comics: comics
+                    comics: creatorComics
                 });
-            case ContentType.COMICS:
-                console.log("COMICS")
+            case ContentType.COMIC:
                 let creators = [];
                 if (rawContent.creators.available > 0) {
-                    creators = rawContent.creators.items.map((creator: any) => { return creator.name });
+                    creators = rawContent.creators.items.map((creator: any) => { return { id: creator.resourceURI } });
                 }
                 return Object.assign({}, {
                     id: rawContent.id,

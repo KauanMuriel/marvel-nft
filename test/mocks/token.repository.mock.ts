@@ -2,6 +2,7 @@ import { injectable } from "inversify";
 import { Token } from "../../src/domain/entities/token.entity";
 import { ContentType } from "../../src/domain/enums/content-type";
 import { ITokenRepository } from "../../src/domain/interfaces/i.token.repository";
+import { User } from "../../src/domain/entities/user.entity";
 
 @injectable()
 export class TokenRepositoryMock implements ITokenRepository {
@@ -18,8 +19,8 @@ export class TokenRepositoryMock implements ITokenRepository {
         const dataJson = JSON.parse(data);
         this.tokens = [{
             uuid: "9bb3e71b-179d-4b8f-9fcf-360a3ad211ce",
-            owner: "ae430434-f3d5-492f-893a-78e110211a70",
-            contentType: ContentType.COMICS,
+            owner: { uuid: "ae430434-f3d5-492f-893a-78e110211a70" } as User,
+            contentType: ContentType.COMIC,
             contentData: dataJson
         }]
     }
@@ -44,7 +45,7 @@ export class TokenRepositoryMock implements ITokenRepository {
 
     getAllByUser(userUuid: string): Promise<Token[]> {
         return new Promise((resolve, reject) => {
-            resolve(this.tokens.filter((token) => token.owner === userUuid));
+            resolve(this.tokens.filter((token) => token.owner.uuid === userUuid ));
         })
     }
 }

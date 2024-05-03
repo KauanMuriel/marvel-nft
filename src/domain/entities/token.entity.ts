@@ -1,4 +1,4 @@
-import { Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 import { ContentType } from "../enums/content-type";
 import { User } from "./user.entity";
 
@@ -13,7 +13,7 @@ export class Token {
     @Column({ type: "json"})
     contentData: JSON;
 
-    @OneToOne(() => User)
+    @ManyToOne(() => User, (owner) => owner.tokens)
     @JoinColumn()
-    owner: string;
+    owner: User;
 }

@@ -19,7 +19,7 @@ export class TokenRepository implements ITokenRepository {
     }
 
     public async getAllByUser(userUuid: string): Promise<Token[]> {
-        return await this._databaseRepository.findBy({ owner: userUuid });
+        return await this._databaseRepository.findBy({ owner: { uuid: userUuid } });
     }
     public async create(token: Token): Promise<Token> {
         return await this._databaseRepository.save(token);
