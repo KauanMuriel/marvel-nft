@@ -1,36 +1,24 @@
-const balanceSchema = {
+const genericBalanceBody = {
     type: 'object',
     required: ['value'],
     properties: {
-        value: { type: 'number'},
+        value: { type: 'number' },
     }
 };
 
-// const balanceSchema = {
-//     tags: ['auth'],
-//     params: {
-        
-//     }
-//     body: {
-//         type: 'object',
-//         required: ['username', 'password', 'email', 'favoriteCreator', 'favoriteCharacter', 'favoriteComic'],
-//         properties: {
-//             username: { type: 'string', minLength: 8 },
-//             password: { type: 'string', minLength: 8 },
-//             favoriteCharacter: { type: 'string', format: 'uuid'},
-//             favoriteCreator: { type: 'string', format: 'uuid' },
-//             favoriteComic: { type: 'string', format: 'uuid' },
-//             email: { type: 'string', format: "email" }
-//         }
-//     },
-//     response: {
-//         '200': {
-//             type: 'object',
-//             properties: {
-//                 uuid: { type: 'string' }
-//             }
-//         }
-//     }
-// };
+const genericBalanceResponse = {
+    '200': {
+        type: 'object',
+        properties: {
+            balance: { type: 'number' }
+        }
+    }
+}
 
-export { balanceSchema };
+const balanceOperationSchema = {
+    tags: ['balance'],
+    body: genericBalanceBody,
+    response: genericBalanceResponse
+};
+
+export { genericBalanceBody, genericBalanceResponse, balanceOperationSchema };
