@@ -18,9 +18,13 @@ export class CreatorRepositoryMock implements ICreatorRepository {
     create(creator: Creator): Promise<Creator> {
         throw new Error("Method not implemented.");
     }
+    
     getAll(): Promise<Creator[]> {
-        throw new Error("Method not implemented.");
+        return new Promise((resolve, reject) => {
+            resolve(this.creators)
+        });
     }
+
     getByUuid(uuid: string): Promise<Creator> {
         return new Promise((resolve, reject) => {
             resolve(this.creators.find((creator) => creator.uuid === uuid));

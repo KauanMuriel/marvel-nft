@@ -2,7 +2,7 @@ import { DeleteResult, UpdateResult } from "typeorm";
 import { Creator } from "../entities/creator.entity";
 
 export interface ICreatorService {
-    create(creator: Creator): Promise<Creator>;
+    create(user: Creator): Promise<Creator>;
     getAll(): Promise<Creator[]>;
     getByUuid(uuid: string): Promise<Creator>;
     update(creator: Creator): Promise<UpdateResult>;

@@ -22,7 +22,7 @@ export class CreatorService implements ICreatorService {
 
     public async create(creator: Creator): Promise<Creator> {
         const fullNameCreator = this._creatorRepository.getByFullName(creator.fullName);
-        if (!fullNameCreator) throw new ConflictException("There is already a creator with this name");
+        if (fullNameCreator) throw new ConflictException("There is already a creator with this name");
 
         const sufixCreator = this._creatorRepository.getBySufix(creator.sufix);
         if (sufixCreator) throw new ConflictException("There is already a creator with this sufix");

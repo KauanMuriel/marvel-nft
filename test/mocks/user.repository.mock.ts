@@ -34,9 +34,14 @@ export class UserRepositoryMock implements IUserRepository {
 
     public async create(user: User): Promise<User> {
         return new Promise(async (resolve, reject) => {
-            const creator = await this._creatorRepository.getByUuid(user.creatorId);
-            const comic = await this._comicRepository.getByUuid(user.comicId);
-            const character = await this._characterRepository.getByUuid(user.characterId);
+            const creator = await this._creatorRepository.getByUuid(user.favoriteCreator);
+            const comic = await this._comicRepository.getByUuid(user.favoriteComic);
+            const character = await this._characterRepository.getByUuid(user.favoriteCharacter);
+            console.log(user)
+            console.log(user.favoriteCreator);
+            console.log(await this._creatorRepository.getAll());
+            // console.log(await this._comicRepository.getAll());
+            // console.log(await this._characterRepository.getAll());
             if (creator && comic && character) {
                 resolve({ uuid: "4de9c6d0-c149-401f-a742-e70b98a629f7", ...user });
             } else {
