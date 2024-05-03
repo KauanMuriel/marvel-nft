@@ -49,8 +49,10 @@ export class TokenService implements ITokenService {
     }
 
     private generateMarvelUrl(contentType: string, randomId: string) {
-        const apiAuthentication = ApiAuhorization.generateApiAuthorization;
-        return `https://gateway.marvel.com:443/v1/public/${contentType}/${randomId}?${apiAuthentication}`;
+        const apiAuthentication = ApiAuhorization.generateApiAuthorization();
+        const marvelUrl = `https://gateway.marvel.com:443/v1/public/${contentType}/${randomId}?${apiAuthentication}`;
+
+        return marvelUrl
     }
 
     private createJsonObject(content: any) {

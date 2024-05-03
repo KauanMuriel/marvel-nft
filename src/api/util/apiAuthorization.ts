@@ -11,7 +11,7 @@ export class ApiAuhorization {
     public static generateApiAuthorization(): string {
         const randomIndex = Math.floor(Math.random() * this._apiKeys.length);
         const [publicKey, privateKey] = this._apiKeys[randomIndex];
-        const hash = Md5.hashStr(this._timeStamp+privateKey+publicKey);
+        const hash = Md5.hashAsciiStr(this._timeStamp+privateKey+publicKey);
 
         return `ts=${this._timeStamp}&apikey=${publicKey}&hash=${hash}`
     }
