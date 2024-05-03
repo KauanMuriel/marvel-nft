@@ -11,7 +11,7 @@ export class Comic {
     title: string;
 
     @Column({ type: 'enum', enum: VariantDescription })
-    variantDescription: string;
+    variantDescription?: string;
 
     @Column()
     isbn: string;

@@ -17,7 +17,6 @@ export class TokenService implements ITokenService {
     public async mine(userUuid: string): Promise<Token> {
         const { contentType, rawContent } = await this.getRandomContentFromMarvelApi();
 
-
         const content = this.mapRawContentAccordingType(contentType, rawContent);
 
         const token = {
@@ -40,13 +39,12 @@ export class TokenService implements ITokenService {
         const marvelUrl = this.generateMarvelUrl(randomContent.toLowerCase(), randomId);
         const response = await fetch(marvelUrl);
 
-        console.log(marvelUrl)
-        console.log(response)
         if (!response.ok) throw new BadRequestException("Insufficient effort");
         
         const json = await response.json();
-        const rawContent = json.results[0];
-        return { rawContent: rawContent, contentType: ContentType[randomContent] };
+
+        const rawContent = json.data.results[0];
+        return { rawContent: rawContent, contentType: randomContent };
     }
 
     private generateMarvelUrl(contentType: string, randomId: string) {
@@ -71,8 +69,10 @@ export class TokenService implements ITokenService {
     }
 
     private mapRawContentAccordingType(type: ContentType, rawContent: any) {
+        console.log("TYPE - ", type)
         switch (type) {
             case ContentType.CHARACTER:
+                console.log("CHARACTER")
                 return Object.assign({}, {
                     id: rawContent.id,
                     name: rawContent.name,
@@ -81,6 +81,7 @@ export class TokenService implements ITokenService {
                     comics: rawContent.comics.map((comic: any) => { return { id: comic.resourceUri } })
                 });
             case ContentType.CREATOR:
+                console.log("CREATOR")
                 let comics = [];
                 if (rawContent.comics.available > 0) {
                     comics = rawContent.comics.items.map((comic: any) => { return { id: comic.resourceUri } })
@@ -93,9 +94,10 @@ export class TokenService implements ITokenService {
                     comics: comics
                 });
             case ContentType.COMICS:
+                console.log("COMICS")
                 let creators = [];
                 if (rawContent.creators.available > 0) {
-                    creators = rawContent.creators.items.map((creator) => { return creator.name });
+                    creators = rawContent.creators.items.map((creator: any) => { return creator.name });
                 }
                 return Object.assign({}, {
                     id: rawContent.id,
