@@ -5,6 +5,7 @@ import { TYPES } from "../../api/util/di/di-types";
 import { ContentType } from "../enums/content-type";
 import { Token } from "../entities/token.entity";
 import { BadRequestException } from "../exceptions/bad-request.exception";
+import { ApiAuhorization } from "../../api/util/apiAuthorization";
 
 @injectable()
 export class TokenService implements ITokenService {
@@ -48,7 +49,8 @@ export class TokenService implements ITokenService {
     }
 
     private generateMarvelUrl(contentType: string, randomId: string) {
-        return `https://gateway.marvel.com:443/v1/public/${contentType}/${randomId}?ts=1&apikey=${process.env.MARVEL_PUBLIC_KEY}&hash=${process.env.MARVEL_HASH}`;
+        const apiAuthentication = ApiAuhorization.generateApiAuthorization;
+        return `https://gateway.marvel.com:443/v1/public/${contentType}/${randomId}?${apiAuthentication}`;
     }
 
     private createJsonObject(content: any) {
