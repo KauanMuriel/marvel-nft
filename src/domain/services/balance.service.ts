@@ -21,10 +21,10 @@ export class BalanceService implements IBalanceService {
     }
 
     public async withdraw(uuid: string, value: number): Promise<void> {
-        await this._userService.increaseBalance(uuid, value);
+        await this._userService.decreaseBalance(uuid, value);
     }
 
     public async deposit(uuid: string, value: number): Promise<void> {
-        await this._userService.decreaseBalance(uuid, value);
+        await this._userService.increaseBalance(uuid, value);
     }
 }
