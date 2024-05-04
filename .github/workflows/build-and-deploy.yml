@@ -25,6 +25,7 @@ jobs:
                 docker push "${{ secrets.DOCKERHUB_USERNAME }}/marvelnft:node"
 
     aplication_unit_tests:
+        needs: build_node_job
         runs-on: ubuntu-latest
           
         steps:
