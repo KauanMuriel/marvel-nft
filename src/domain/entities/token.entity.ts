@@ -21,6 +21,9 @@ export class Token {
     @JoinColumn()
     owner: User;
 
-    @Column({ type: 'enum', enum: TokenStatus, default: TokenStatus.OWNED })
+    @Column({ type: 'enum', enum: TokenStatus, default: TokenStatus.CLAIMED })
     status: TokenStatus;
+
+    @Column({ default: 0.0 })
+    price: number;
 }
