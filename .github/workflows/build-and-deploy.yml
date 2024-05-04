@@ -54,14 +54,8 @@ jobs:
           - name: Checkout
             uses: actions/checkout@v4
           
-          - name: Pull docker image
-            run: docker pull "${{ secrets.DOCKERHUB_USERNAME }}/marvelnft:node"
-          
-          - name: Start postgres conteiner
-            run: docker run -d --name postgres -p 5432:5432 -e POSTGRES_PASSWORD=marvelstuffs -e POSTGRES_DB=marvelnft postgres:16.2-alpine
-
-          - name: Start node conteiner
-            run: docker run "${{ secrets.DOCKERHUB_USERNAME }}/marvelnft:node" npm start
+          - name: Start docker compose
+            run: docker-compose up
           
           - name: Start load tests
             run: curl localhost:3000/ping
