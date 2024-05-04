@@ -23,4 +23,25 @@ jobs:
               run: |
                 docker tag marvelnft:node "${{ secrets.DOCKERHUB_USERNAME }}/marvelnft:node"
                 docker push "${{ secrets.DOCKERHUB_USERNAME }}/marvelnft:node"
+
+    aplication_unit_tests:
+        needs: build_node_job
+        runs-on: ubuntu-latest
           
+        steps:
+          - name: Checkout
+            uses: actions/checkout@v4
+          
+          - name: Pull docker image
+            run: docker pull "${{ secrets.DOCKERHUB_USERNAME }}/marvelnft:node"
+          
+          - name: Run tests on docker image
+            run: |
+              docker run "${{ secrets.DOCKERHUB_USERNAME }}/marvelnft:node" npm test
+              exit_code=$?
+              if [ $exit_code -eq 0 ]; then
+                echo "[+] All tests passed successfuly!"
+              else
+                echo "[-] Test failures!"
+                exit $exit_code
+              fi
