@@ -14,6 +14,7 @@ export class TokenController implements ITokenController {
 
         this.mine = this.mine.bind(this);
         this.getAll = this.getAll.bind(this);
+        this.getByUuid = this.getByUuid.bind(this);
     }
 
     public async mine(request: FastifyRequest, reply: FastifyReply): Promise<FastifyReply> {
@@ -26,5 +27,10 @@ export class TokenController implements ITokenController {
     public async getAll(request: FastifyRequest, reply: FastifyReply): Promise<FastifyReply> {
         const tokens = await this._tokenService.getAll();
         return reply.send(tokens);
+    }
+
+    public async getByUuid(request: FastifyRequest, reply: FastifyReply): Promise<FastifyReply> {
+        const token = await this._tokenService.getByUuid(request.params['id']);
+        return reply.send(token);
     }
 }

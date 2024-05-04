@@ -88,4 +88,10 @@ export class TokenRepositoryMock implements ITokenRepository {
             resolve(this.tokens.filter((token) => token.status == TokenStatus.FOR_EXCHANGE));
         })
     }
+
+    update(token: Token): Promise<void> {
+        return new Promise((resolve, reject) => {
+            resolve();
+        });
+    }
 }
