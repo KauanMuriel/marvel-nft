@@ -10,6 +10,9 @@ export class MarketplaceController implements IMarketplaceController {
     
     public constructor(@inject(TYPES.IMarketplaceService) marketplaceService: IMarketplaceService) {
         this._marketplaceService = marketplaceService;
+
+        this.getForSale = this.getForSale.bind(this);
+        this.getForExchange = this.getForExchange.bind(this);
     }
 
     public async getForSale(request: FastifyRequest, reply: FastifyReply): Promise<FastifyReply> {

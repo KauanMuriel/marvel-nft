@@ -3,6 +3,7 @@ import { Token } from "../../src/domain/entities/token.entity";
 import { ContentType } from "../../src/domain/enums/content-type";
 import { ITokenRepository } from "../../src/domain/interfaces/i.token.repository";
 import { User } from "../../src/domain/entities/user.entity";
+import { TokenStatus } from "../../src/domain/enums/token-status";
 
 @injectable()
 export class TokenRepositoryMock implements ITokenRepository {
@@ -17,13 +18,32 @@ export class TokenRepositoryMock implements ITokenRepository {
             "thumbnail":"http://i.annihil.us/u/prod/marvel/i/mg/c/03/50ad698538028",
             "creator":["Diana Albers","Dennis Janke","Paul Neary"]}`;
         const dataJson = JSON.parse(data);
-        this.tokens = [{
-            uuid: "9bb3e71b-179d-4b8f-9fcf-360a3ad211ce",
-            owner: { uuid: "ae430434-f3d5-492f-893a-78e110211a70" } as User,
-            contentId: "15789",
-            contentType: ContentType.COMIC,
-            contentData: dataJson
-        }]
+        this.tokens = [
+            {
+                uuid: "9bb3e71b-179d-4b8f-9fcf-360a3ad211ce",
+                owner: { uuid: "ae430434-f3d5-492f-893a-78e110211a70" } as User,
+                contentId: "15789",
+                contentType: ContentType.COMIC,
+                contentData: dataJson,
+                status: TokenStatus.OWNED
+            },
+            {
+                uuid: "9bb3e71b-179d-4b8f-9fcf-360a3ad211ce",
+                owner: { uuid: "ae430434-f3d5-492f-893a-78e110211a70" } as User,
+                contentId: "15789",
+                contentType: ContentType.COMIC,
+                contentData: dataJson,
+                status: TokenStatus.FOR_SALE
+            },
+            {
+                uuid: "9bb3e71b-179d-4b8f-9fcf-360a3ad211ce",
+                owner: { uuid: "ae430434-f3d5-492f-893a-78e110211a70" } as User,
+                contentId: "15789",
+                contentType: ContentType.COMIC,
+                contentData: dataJson,
+                status: TokenStatus.FOR_EXCHANGE
+            }
+        ]
     }
     getByContent(contentId: string, contentType: ContentType): Promise<Token> {
         return new Promise((resolve, reject) => {
@@ -54,6 +74,18 @@ export class TokenRepositoryMock implements ITokenRepository {
     getAllByUser(userUuid: string): Promise<Token[]> {
         return new Promise((resolve, reject) => {
             resolve(this.tokens.filter((token) => token.owner.uuid === userUuid));
+        })
+    }
+
+    getAllForSale(): Promise<Token[]> {
+        return new Promise((resolve, reject) => {
+            resolve(this.tokens.filter((token) => token.status == TokenStatus.FOR_SALE));
+        })
+    }
+
+    getAllForExchange(): Promise<Token[]> {
+        return new Promise((resolve, reject) => {
+            resolve(this.tokens.filter((token) => token.status == TokenStatus.FOR_EXCHANGE));
         })
     }
 }
