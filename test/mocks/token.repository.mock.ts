@@ -28,18 +28,18 @@ export class TokenRepositoryMock implements ITokenRepository {
                 status: TokenStatus.OWNED
             },
             {
-                uuid: "9bb3e71b-179d-4b8f-9fcf-360a3ad211ce",
+                uuid: "d7158a0f-c497-4939-a903-e45490b464a6",
                 owner: { uuid: "ae430434-f3d5-492f-893a-78e110211a70" } as User,
                 contentId: "15789",
-                contentType: ContentType.COMIC,
+                contentType: ContentType.CHARACTER,
                 contentData: dataJson,
                 status: TokenStatus.FOR_SALE
             },
             {
-                uuid: "9bb3e71b-179d-4b8f-9fcf-360a3ad211ce",
+                uuid: "045e0684-0a0b-45b9-af15-424e90182c91",
                 owner: { uuid: "ae430434-f3d5-492f-893a-78e110211a70" } as User,
                 contentId: "15789",
-                contentType: ContentType.COMIC,
+                contentType: ContentType.CREATOR,
                 contentData: dataJson,
                 status: TokenStatus.FOR_EXCHANGE
             }
