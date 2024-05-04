@@ -56,6 +56,8 @@ jobs:
           
           - name: Start docker compose
             run: docker-compose up --detach
-          
-          - name: Start load tests
-            run: curl localhost:3000/ping
+
+          - name: Execute load tests
+            uses: artilleryio/action-cli@v1
+            with:
+              command: run test/performance/marvelnft.yml
