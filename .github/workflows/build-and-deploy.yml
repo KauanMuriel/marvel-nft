@@ -58,10 +58,10 @@ jobs:
             run: docker pull "${{ secrets.DOCKERHUB_USERNAME }}/marvelnft:node"
           
           - name: Start postgres conteiner
-            run: docker run --name some-postgres -p 5432:5432 -e POSTGRES_PASSWORD=marvelstuffs -e POSTGRES_DB=marvelnft postgres
+            run: docker run -d --name postgres -p 5432:5432 -e POSTGRES_PASSWORD=marvelstuffs -e POSTGRES_DB=marvelnft postgres:16.2-alpine
 
           - name: Start node conteiner
             run: docker run "${{ secrets.DOCKERHUB_USERNAME }}/marvelnft:node" npm start
           
           - name: Start load tests
-            run: ls -la
+            run: curl localhost:3000/ping
