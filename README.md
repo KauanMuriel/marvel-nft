@@ -17,7 +17,7 @@ Desenvolvido por **Kauan Muriel Rossi (2214501-2)** e **Daniel Bonam Rissardi (2
 
 Nossa prova prática consiste em uma aplicação web o qual os usuário podem minerar tokens unícos que podem ser colecionados ou vendidos á outros usuarios do sistema.
 
-Semelhante a um ecosistema de NFT’s, a plataforma permite a mineração de tokens únicos que podem ser vendidos dentro do marketplate. Os tokens são gerados a partir de consultas da API da marvel, e armazenam os dados relacionados ao conteudo em formato json, que pode ser lido e utilizado em outras aplicacoes
+Semelhante a um ecosistema de NFT’s, a plataforma permite a mineração de tokens únicos que podem ser vendidos dentro do marketplate. Os tokens são gerados a partir de consultas da API da marvel, e estes armazenam os dados relacionados ao conteudo em formato json, que pode ser lido e utilizado em outra aplicação, como um frontend.
 
 ## Tecnologias utilizadas
 
@@ -52,6 +52,8 @@ Abaixo as funcionalidades desenvolvidas.
     - O sistema conta com uma autenticação, onde para realizar ações relevantes na aplicação é necessário que o usuário esteja tenha criado uma conta válida e esteja logado ao sistema.
 - Carteira do usuário
     - Os usuários possuem uma carteira própria onde podem depositar ou sacar dinheiro. Os usuários utilizam a carteira para comprar novos tokens ou ganhar dinheiro por meio da venda dos mesmos.
+- Preferencias
+    - Ao realizar a criação da sua conta, o usuario pode selecionar seu personagem, criador e revista preferidos, os quais devem ser cadastrados pelo administrador do sistema, entretanto não influenciam a geração de tokens.
 - Minerar tokens
     - O usuário faz uma requisição para a rota de mineração e recebe como retorno um token como recompensa de seu esforço.
     - Cada token é unico, o mesmo é gerado por meio da API da marvel.

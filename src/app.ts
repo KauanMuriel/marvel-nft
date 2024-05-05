@@ -1,7 +1,7 @@
-import fastify, { FastifyInstance } from "fastify";
-import fastifySwagger from "@fastify/swagger";
+import fastify, { FastifyInstance, FastifyRegisterOptions } from "fastify";
+import fastifySwagger, { FastifyDynamicSwaggerOptions, FastifyStaticSwaggerOptions, FastifySwaggerOptions, SwaggerOptions } from "@fastify/swagger";
 import { configureAuthRoutes } from "./api/routes/auth.routes";
-import { fastifySwaggerUi } from "@fastify/swagger-ui";
+import { FastifySwaggerUiOptions, fastifySwaggerUi } from "@fastify/swagger-ui";
 import { fastifyCookie } from "@fastify/cookie";
 import { configureHealthCheckRoutes } from "./api/routes/health-check.routes";
 import { Container } from "inversify";
@@ -27,14 +27,21 @@ const swaggerOptions = {
         openapi: '3.0.0',
         info: {
             title: 'Marvel-nft',
-            description: 'A marvel contents tokenized system',
-            version: '0.1.0'
+            description: 'Similar to an NFT ecosystem, the platform allows for the mining of unique tokens that can be sold within the marketplace. These tokens are generated from requests to the Marvel API.',
+            version: '1.0.0'
         },
         host: "localhost",
         consumes: ["application/json"],
         produces: ["application/json"],
         tags: [
             { name: 'auth', description: 'Authentication end-points' },
+            { name: 'creator', description: 'The creator end-points that can be used to define the favorite creator of the user' },
+            { name: 'character', description: 'The creator end-points that can be used to define the favorite character of the user' },
+            { name: 'comic', description: 'The comic end-points that can be used to define the favorite comic of the user' },
+            { name: 'token', description: 'End-points used to mine, get all tokens and the details of a specific token' },
+            { name: 'balance', description: "End-points that can be used to manipulate and visualize user's balance" },
+            { name: 'marketplace', description: 'Marketplace end-points used to put tokens for sale and buy them' },
+            { name: 'health-check', description: 'End-points that can be used to verify system execution' }
         ]
     },
     externalDocs: {
