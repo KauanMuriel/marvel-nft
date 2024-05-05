@@ -26,7 +26,7 @@ const getTokenDetailsSchema = {
     params: {
         type: 'object',
         properties: {
-            id: { type: 'string', format: 'uuid' }
+            uuid: { type: 'string', format: 'uuid' }
         }
     },
     response: {

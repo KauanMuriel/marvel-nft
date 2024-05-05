@@ -7,7 +7,7 @@ import { authenticate } from "../middlewares/auth.middleware";
 
 export function configureCreatorRoutes(app: FastifyInstance, creatorController: ICreatorController) {
     app.register((app, options, done) => {
-        app.get('/creator/:id', { schema: { params: genericUuidSchemaParams, tags: ['creator'] } }, creatorController.getById);
+        app.get('/creator/:uuid', { schema: { params: genericUuidSchemaParams, tags: ['creator'] } }, creatorController.getByUuid);
         app.get('/creator', { schema: { tags: ['creator'] } }, creatorController.getAll);
         app.post('/creator', { schema: createCreatorSchema, preHandler: [authenticate, verifyIsAdmin] }, creatorController.create);
         app.put('/creator/:uuid', { schema: updateCreatorSchema, preHandler: [authenticate, verifyIsAdmin] }, creatorController.update);

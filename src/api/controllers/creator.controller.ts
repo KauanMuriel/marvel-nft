@@ -14,7 +14,7 @@ export class CreatorController implements ICreatorController {
         this._creatorService = creatorService;
 
         this.getAll = this.getAll.bind(this);
-        this.getById = this.getById.bind(this);
+        this.getByUuid = this.getByUuid.bind(this);
         this.create = this.create.bind(this);
         this.delete = this.delete.bind(this);
         this.update = this.update.bind(this);
@@ -25,7 +25,7 @@ export class CreatorController implements ICreatorController {
         return reply.send(creators);
     }
     
-    public async getById(request: FastifyRequest, reply: FastifyReply): Promise<FastifyReply> {
+    public async getByUuid(request: FastifyRequest, reply: FastifyReply): Promise<FastifyReply> {
         const creator = await this._creatorService.getByUuid(request.params['uuid']);
         return reply.send(creator);
     }
