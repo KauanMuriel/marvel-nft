@@ -5,7 +5,6 @@ import { TYPES } from "../../api/util/di/di-types";
 import { Token } from "../entities/token.entity";
 import { TokenStatus } from "../enums/token-status";
 import { BadRequestException } from "../exceptions/bad-request.exception";
-import { IUserRepository } from "../interfaces/i.user.respository";
 import { IUserService } from "../interfaces/i.user.service";
 import { User } from "../entities/user.entity";
 import { UnauthorizedException } from "../exceptions/unauthorized.exception";
@@ -49,6 +48,10 @@ export class MarketplaceService implements IMarketplaceService {
 
     public async sellToken(tokenUuid: string, price: number, userUuid: string): Promise<Token> {
         const token = await this._tokenRepository.getByUuid(tokenUuid);
+
+        if (!token) {
+            throw new BadRequestException("There isn't a token with this uuid");
+        }
 
         if (token.owner.uuid !== userUuid) {
             throw new UnauthorizedException("The token isn't the user's to be sold");

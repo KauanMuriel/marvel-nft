@@ -14,6 +14,7 @@ export class MarketplaceController implements IMarketplaceController {
         this._marketplaceService = marketplaceService;
 
         this.buyToken = this.buyToken.bind(this);
+        this.sellToken = this.sellToken.bind(this);
         this.getForSale = this.getForSale.bind(this);
         this.getForExchange = this.getForExchange.bind(this);
     }

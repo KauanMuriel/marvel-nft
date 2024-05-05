@@ -17,13 +17,13 @@ export class Token {
     @Column({ type: "json"})
     contentData: JSON;
 
-    @ManyToOne(() => User, (owner) => owner.tokens)
+    @ManyToOne(() => User, (owner) => owner.tokens, { eager: true })
     @JoinColumn()
     owner: User;
 
     @Column({ type: 'enum', enum: TokenStatus, default: TokenStatus.CLAIMED })
     status: TokenStatus;
 
-    @Column({ default: 0.0 })
+    @Column({ type: 'numeric', default: 0.0 })
     price: number;
 }

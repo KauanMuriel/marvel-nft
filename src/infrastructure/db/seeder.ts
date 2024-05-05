@@ -8,7 +8,7 @@ class InitialDataSeeder {
             .into(User)
             .values([{
                 username: "marvel.nft",
-                password: "superadmin",
+                password: "$2a$10$aj28d44nght912301zxdjuWiZqIec9oLmVpzdNEiqaGEOqVm65VSW",
                 email: "marvel.nft@email.com",
                 admin: true
             }])
