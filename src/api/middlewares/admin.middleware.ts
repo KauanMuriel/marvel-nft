@@ -8,7 +8,7 @@ export async function verifyIsAdmin(request: FastifyRequest, reply: FastifyReply
     const authorization = request.headers.authorization;
 
     const encodedToken = authorization.replace('Bearer ', "");
-    const { uuid } = await JWTHelper.decodeToken(encodedToken);
+    const { uuid } = JWTHelper.decodeToken(encodedToken);
 
     const userRepository = app.container.get<IUserRepository>(TYPES.IUserRepository);
     const user = await userRepository.findByUuid(uuid);

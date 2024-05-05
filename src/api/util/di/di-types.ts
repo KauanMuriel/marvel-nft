@@ -6,6 +6,7 @@ const TYPES = {
     IUserService: Symbol.for("IUserService"),
     IBalanceService: Symbol.for("IBalanceService"),
     ITokenService: Symbol.for("ITokenService"),
+    IMarketplaceService: Symbol.for("IMarketplaceService"),
 
     ICreatorRepository: Symbol.for("ICreatorRepository"),
     ICharacterRepository: Symbol.for("ICharacterRepository"),
@@ -18,7 +19,8 @@ const TYPES = {
     ICharacterController: Symbol.for("ICharacterController"),
     IComicController: Symbol.for("IComicController"),
     IBalanceController: Symbol.for("IBalanceController"),
-    ITokenController: Symbol.for("ITokenController")
+    ITokenController: Symbol.for("ITokenController"),
+    IMarketplaceController: Symbol.for("IMarketplaceController")
 }
 
 export { TYPES };

@@ -18,28 +18,27 @@ export class BalanceController implements IBalanceController {
     }
     
     public async get(request: FastifyRequest, reply: FastifyReply): Promise<FastifyReply> {
-        const accessToken = request.headers.authorization;
-        const { uuid } = await JWTHelper.decodeToken(accessToken);
-
+        const jwt = JWTHelper.getJWTFromRequest(request);
+        const { uuid } = JWTHelper.decodeToken(jwt);
         const balance = await this._balanceService.get(uuid);
         return reply.send( { balance : balance } );
     }
 
     public async withdraw(request: FastifyRequest, reply: FastifyReply): Promise<FastifyReply> {
-        const accessToken = request.headers.authorization;
-        const { uuid } = await JWTHelper.decodeToken(accessToken);
-        const value = request.body['value'];
+        const jwt = JWTHelper.getJWTFromRequest(request);
+        const { uuid } = JWTHelper.decodeToken(jwt);
+        const value = parseInt(request.body['value']);
 
         await this._balanceService.withdraw(uuid, value);
         return reply.send( { message: "Withdraw successful!" } );
     }
 
     public async deposit(request: FastifyRequest, reply: FastifyReply): Promise<FastifyReply> {
-        const accessToken = request.headers.authorization;
-        const { uuid } = await JWTHelper.decodeToken(accessToken);
-        const value = request.body['value'];
+        const jwt = JWTHelper.getJWTFromRequest(request);
+        const { uuid } = JWTHelper.decodeToken(jwt);
+        const value = parseInt(request.body['value']);
 
         await this._balanceService.deposit(uuid, value);
-        return reply.send( { message: "Depoit successful!" } );
+        return reply.send( { message: "Deposit successful!" } );
     }
 }

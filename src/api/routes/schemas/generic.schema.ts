@@ -6,4 +6,14 @@ const simpleGetSchemaParams = {
     }
 };
 
-export { simpleGetSchemaParams };
+const simpleResponse = {
+    '200': {
+        type: 'object',
+        properties: {
+            uuid: { type: 'string' }
+        }
+    }
+}
+
+
+export { simpleGetSchemaParams, simpleResponse };

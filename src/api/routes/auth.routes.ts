@@ -7,7 +7,7 @@ export function configureAuthRoutes(app: FastifyInstance, authController: IAuthC
     app.register((app, options, done) => {
         app.post('/auth/signup', { schema: signupSchema }, authController.signup);
         app.post('/auth/signin', { schema: signinSchema }, authController.signin);
-        app.post('/auth/logout', { preHandler: authenticate }, authController.logout);
+        app.post('/auth/logout', { schema: { tags: ['auth']}, preHandler: authenticate }, authController.logout);
         done();
     });
 }

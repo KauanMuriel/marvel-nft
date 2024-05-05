@@ -32,13 +32,14 @@ export class UserRepository implements IUserRepository {
 
     public async increaseBalance(uuid: string, value: number): Promise<void> {
         const user =  await this.findByUuid(uuid);
-        user.balance + value;
+        user.balance = (parseFloat(user.balance.toString()) + value)
         await this._databaseRepository.save(user);
     }
-
+    
     public async decreaseBalance(uuid: string, value: number): Promise<void> {
         const user =  await this.findByUuid(uuid);
-        user.balance - value;
+        user.balance = (parseFloat(user.balance.toString()) - value)
         await this._databaseRepository.save(user);
     }
+    
 }

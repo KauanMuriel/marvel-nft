@@ -1,9 +1,24 @@
-const balanceSchema = {
+const genericBalanceBody = {
     type: 'object',
     required: ['value'],
     properties: {
-        value: { type: 'number'},
+        value: { type: 'number' },
     }
 };
 
-export { balanceSchema };
+const genericBalanceResponse = {
+    '200': {
+        type: 'object',
+        properties: {
+            balance: { type: 'number' }
+        }
+    }
+}
+
+const balanceOperationSchema = {
+    tags: ['balance'],
+    body: genericBalanceBody,
+    response: genericBalanceResponse
+};
+
+export { genericBalanceBody, genericBalanceResponse, balanceOperationSchema };
