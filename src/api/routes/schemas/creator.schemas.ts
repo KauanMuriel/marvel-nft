@@ -1,4 +1,4 @@
-import { simpleResponse } from "./generic.schema";
+import { genericUuidSchemaParams, simpleResponse } from "./generic.schema";
 
 const createCreatorSchema = {
     tags: ['creator'],
@@ -16,11 +16,11 @@ const createCreatorSchema = {
 
 const updateCreatorSchema = {
     tags: ['creator'],
+    params: genericUuidSchemaParams,
     body: {
         type: 'object',
-        required: ['uuid', 'fullname', 'sufix', 'thumbnail'],
+        required: ['fullname', 'sufix', 'thumbnail'],
         properties: {
-            uuid: { type: 'string', format: 'uuid' },
             fullname: { type: 'string' },
             sufix: { type: 'string' },
             thumbnail: { type: 'string' }

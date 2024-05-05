@@ -11,7 +11,6 @@ export class ComicRepositoryMock implements IComicRepository {
             uuid: "10908bca-734f-4c17-be24-22bd4db4b2eb",
             isbn: "978-1302923730",
             title: "Spider-Man #1",
-            variantDescription: "director’s cut",
             creator: "5e3a9c10-a900-4ffb-ab22-5af49b8ac0ec"
         }];
     }
@@ -31,10 +30,10 @@ export class ComicRepositoryMock implements IComicRepository {
     getByIsbn(isbn: string): Promise<Comic> {
         throw new Error("Method not implemented.");
     }
-    update(Comic: Comic) {
+    update(Comic: Comic): Promise<void> {
         throw new Error("Method not implemented.");
     }
-    delete(uuid: string) {
+    delete(uuid: string): Promise<void> {
         throw new Error("Method not implemented.");
     }
 }

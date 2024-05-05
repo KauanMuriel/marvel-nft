@@ -36,10 +36,10 @@ export class CreatorRepositoryMock implements ICreatorRepository {
     getBySufix(sufix: string): Promise<Creator> {
         throw new Error("Method not implemented.");
     }
-    update(creator: Creator) {
+    update(creator: Creator): Promise<void> {
         throw new Error("Method not implemented.");
     }
-    delete(uuid: string) {
+    delete(uuid: string): Promise<void> {
         throw new Error("Method not implemented.");
     }
 }

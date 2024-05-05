@@ -5,6 +5,6 @@ export interface IComicRepository {
     getAll(): Promise<Comic[]>;
     getByUuid(uuid: string): Promise<Comic>;
     getByIsbn(isbn: string): Promise<Comic>;
-    update(Comic: Comic);
-    delete(uuid: string);
+    update(Comic: Comic): Promise<void>;
+    delete(uuid: string): Promise<void>;
 }

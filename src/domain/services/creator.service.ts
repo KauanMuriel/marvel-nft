@@ -1,7 +1,6 @@
 import { injectable, inject } from "inversify";
 import { ICreatorService } from "../interfaces/i.creator.service";
 import { ICreatorRepository } from "../interfaces/i.creator.repository";
-import { UpdateResult, DeleteResult } from "typeorm";
 import { Creator } from "../entities/creator.entity";
 import { TYPES } from "../../api/util/di/di-types";
 import { ConflictException } from "../exceptions/conflict.exception";
@@ -38,11 +37,11 @@ export class CreatorService implements ICreatorService {
         return await this._creatorRepository.getByUuid(uuid);
     }
 
-    public async update(creator: Creator): Promise<UpdateResult> {
-        return await this._creatorRepository.update(creator);
+    public async update(creator: Creator): Promise<void> {
+        await this._creatorRepository.update(creator);
     }
 
-    public async delete(uuid: string): Promise<DeleteResult> {
-        return await this._creatorRepository.delete(uuid);
+    public async delete(uuid: string): Promise<void> {
+        await this._creatorRepository.delete(uuid);
     }
 }

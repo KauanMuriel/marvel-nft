@@ -1,7 +1,6 @@
 import { injectable, inject } from "inversify";
 import { IComicService } from "../interfaces/i.comic.service";
 import { IComicRepository } from "../interfaces/i.comic.repository";
-import { UpdateResult, DeleteResult } from "typeorm";
 import { Comic } from "../entities/comic.entity";
 import { TYPES } from "../../api/util/di/di-types";
 import { ConflictException } from "../exceptions/conflict.exception";
@@ -35,11 +34,11 @@ export class ComicService implements IComicService {
         return await this._comicRepository.getByUuid(uuid);
     }
 
-    public async update(comic: Comic): Promise<UpdateResult> {
-        return await this._comicRepository.update(comic);
+    public async update(comic: Comic): Promise<void> {
+        await this._comicRepository.update(comic);
     }
 
-    public async delete(uuid: string): Promise<DeleteResult> {
-        return await this._comicRepository.delete(uuid);
+    public async delete(uuid: string): Promise<void> {
+        await this._comicRepository.delete(uuid);
     }
 }

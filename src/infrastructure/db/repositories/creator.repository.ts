@@ -1,8 +1,9 @@
 import { injectable } from "inversify";
 import { AppDataSource } from "../data-source";
 import { Creator } from "../../../domain/entities/creator.entity";
-import { DeleteResult, Repository, UpdateResult } from "typeorm";
+import { Repository } from "typeorm";
 import { ICreatorRepository } from "../../../domain/interfaces/i.creator.repository";
+import { NotFoundException } from "../../../domain/exceptions/not-found.exception";
 
 @injectable()
 export class CreatorRepository implements ICreatorRepository {
@@ -31,11 +32,17 @@ export class CreatorRepository implements ICreatorRepository {
         return await this._databaseRepository.find();
     }
 
-    public async delete(uuid: string): Promise<DeleteResult> {
-        return await this._databaseRepository.delete(uuid);
+    public async delete(uuid: string): Promise<void> {
+        const result = await this._databaseRepository.delete(uuid);
+        if (result.affected === 0) {
+            throw new NotFoundException("There isn't a creator with this uuid");
+        }
     }
 
-    public async update(creator: Creator): Promise<UpdateResult> {
-        return await this._databaseRepository.update(creator.uuid, creator);
+    public async update(creator: Creator): Promise<void> {
+        const result =  await this._databaseRepository.update(creator.uuid, creator);
+        if (result.affected === 0) {
+            throw new NotFoundException("There isn't a creator with this uuid");
+        }
     }
 }
