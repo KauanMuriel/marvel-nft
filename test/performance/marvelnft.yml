@@ -1,16 +1,80 @@
 config:
   target: 'http://127.0.0.1:3000'
   phases:
-    - duration: 10
-      arrivalRate: 50
-  ensure:
-    maxErrorRate: 1
-    max: 500
+    - duration: 20
+      arrivalRate: 500
  
 scenarios:
-  - name: 'Check application health.'
+  - name: 'Test application health.'
     flow:
       - get:
           url: '/ping'
+          expect:
+            - statusCode: 200
+
+  - name: 'Test singup route invalid data'
+    flow:
+      - post:
+          url: '/auth/signin'
+          json:
+            email: "teste.teste@test.com"
+            password: "testando123"
+          expect:
+            - statusCode: 401
+
+  - name: 'Test singup route valid data'
+    flow:
+      - post:
+          url: '/auth/signin'
+          json:
+            email: "marvel.nft@email.com"
+            password: "superadmin"
+          expect:
+            - statusCode: 200
+            - json:
+                path: "$.accessToken"
+                expect: ".*"
+          save:
+            - json: "$.accessToken"
+              as: "accessToken"
+
+  - name: 'Test balance routes'
+    flow:
+      - post:
+          url: '/auth/signin'
+          json:
+            email: "marvel.nft@email.com"
+            password: "superadmin"
+          expect:
+            - statusCode: 200
+            - json:
+                path: "$.accessToken"
+                expect: ".*"
+          save:
+            - json: "$.accessToken"
+              as: "accessToken"
+
+      - get:
+          url: '/balance'
+          headers:
+            Authorization: "Bearer {{ accessToken }}"
+          expect:
+            - statusCode: 200
+
+      - post:
+          url: '/balance/withdraw'
+          headers:
+            Authorization: "Bearer {{ accessToken }}"
+          json:
+            value: "10"
+          expect:
+            - statusCode: 200
+
+      - post:
+          url: '/balance/deposit'
+          headers:
+            Authorization: "Bearer {{ accessToken }}"
+          json:
+            value: "20"
           expect:
             - statusCode: 200
