@@ -25,7 +25,8 @@ export class TokenRepositoryMock implements ITokenRepository {
                 contentId: "15789",
                 contentType: ContentType.COMIC,
                 contentData: dataJson,
-                status: TokenStatus.OWNED
+                status: TokenStatus.CLAIMED,
+                price: 0.0
             },
             {
                 uuid: "d7158a0f-c497-4939-a903-e45490b464a6",
@@ -33,7 +34,8 @@ export class TokenRepositoryMock implements ITokenRepository {
                 contentId: "15789",
                 contentType: ContentType.CHARACTER,
                 contentData: dataJson,
-                status: TokenStatus.FOR_SALE
+                status: TokenStatus.FOR_SALE,
+                price: 50
             },
             {
                 uuid: "045e0684-0a0b-45b9-af15-424e90182c91",
@@ -41,7 +43,8 @@ export class TokenRepositoryMock implements ITokenRepository {
                 contentId: "15789",
                 contentType: ContentType.CREATOR,
                 contentData: dataJson,
-                status: TokenStatus.FOR_EXCHANGE
+                status: TokenStatus.FOR_EXCHANGE,
+                price: 0.0
             }
         ]
     }
@@ -87,5 +90,11 @@ export class TokenRepositoryMock implements ITokenRepository {
         return new Promise((resolve, reject) => {
             resolve(this.tokens.filter((token) => token.status == TokenStatus.FOR_EXCHANGE));
         })
+    }
+
+    update(token: Token): Promise<void> {
+        return new Promise((resolve, reject) => {
+            resolve();
+        });
     }
 }

@@ -6,6 +6,6 @@ export interface ICreatorRepository {
     getByUuid(uuid: string): Promise<Creator>;
     getByFullName(fullName: string): Promise<Creator>;
     getBySufix(sufix: string): Promise<Creator>;
-    update(creator: Creator);
-    delete(uuid: string);
+    update(creator: Creator): Promise<void>;
+    delete(uuid: string): Promise<void>;
 }

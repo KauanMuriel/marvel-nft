@@ -1,4 +1,4 @@
-import { simpleResponse } from "./generic.schema";
+import { genericUuidSchemaParams, simpleResponse } from "./generic.schema";
 
 const createComicSchema = {
     tags: ['comic'],
@@ -17,13 +17,12 @@ const createComicSchema = {
 
 const updateComicSchema = {
     tags: ['comic'],
+    params: genericUuidSchemaParams,
     body: {
         type: 'object',
-        required: ['uuid', 'title', 'sufix', 'isbn', 'creator'],
+        required: ['title', 'isbn', 'creator'],
         properties: {
-            uuid: { type: 'string', format: 'uuid' },
             title: { type: 'string' },
-            variantDescription: {},
             isbn: { type: 'string' },
             creator: { type: 'string', format: 'uuid' }
         }

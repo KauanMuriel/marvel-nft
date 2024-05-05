@@ -1,4 +1,4 @@
-import { simpleResponse } from "./generic.schema";
+import { genericUuidSchemaParams, simpleResponse } from "./generic.schema";
 
 const createCharacterSchema = {
     tags: ['character'],
@@ -16,17 +16,17 @@ const createCharacterSchema = {
 
 const updateCharacterSchema = {
     tags: ['character'],
+    params: genericUuidSchemaParams,
     body: {
         type: 'object',
-        required: ['uuid', 'name', 'thumbnail'],
+        required: ['name', 'thumbnail'],
         properties: {
-            uuid: { type: 'string', format: 'uuid' },
             name: { type: 'string' },
             description: { type: 'string', minLength: 10 },
             thumbnail: { type: 'string' }
         }
     },
     response: simpleResponse
-}
+};
 
 export { createCharacterSchema , updateCharacterSchema };

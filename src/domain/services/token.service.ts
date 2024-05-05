@@ -13,6 +13,10 @@ export class TokenService implements ITokenService {
 
     public constructor(@inject(TYPES.ITokenRepository) tokenRepository: ITokenRepository) {
         this._tokenRepository = tokenRepository;
+
+        this.mine = this.mine.bind(this);
+        this.getAll = this.getAll.bind(this);
+        this.getByUuid = this.getByUuid.bind(this);
     }
 
     public async mine(userUuid: string): Promise<Token> {
@@ -32,6 +36,10 @@ export class TokenService implements ITokenService {
 
     public async getAll(): Promise<Token[]> {
         return await this._tokenRepository.getAll();
+    }
+
+    public async getByUuid(uuid: string): Promise<Token> {
+        return await this._tokenRepository.getByUuid(uuid);
     }
 
     private async getRandomContentFromMarvelApi(): Promise<{ rawContent: any, contentType: ContentType }> {

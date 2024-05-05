@@ -1,8 +1,9 @@
 import { injectable } from "inversify";
 import { AppDataSource } from "../data-source";
 import { Comic } from "../../../domain/entities/comic.entity";
-import { DeleteResult, Repository, UpdateResult } from "typeorm";
+import { Repository } from "typeorm";
 import { IComicRepository } from "../../../domain/interfaces/i.comic.repository";
+import { NotFoundException } from "../../../domain/exceptions/not-found.exception";
 
 @injectable()
 export class ComicRepository implements IComicRepository {
@@ -28,11 +29,17 @@ export class ComicRepository implements IComicRepository {
         return await this._databaseRepository.find();
     }
 
-    public async delete(uuid: string): Promise<DeleteResult> {
-        return await this._databaseRepository.delete(uuid);
+    public async delete(uuid: string): Promise<void> {
+        const result = await this._databaseRepository.delete(uuid);
+        if (result.affected === 0) {
+            throw new NotFoundException("There isn't a comic with this uuid");
+        }
     }
 
-    public async update(Comic: Comic): Promise<UpdateResult> {
-        return await this._databaseRepository.update(Comic.uuid, Comic);
+    public async update(Comic: Comic): Promise<void> {
+        const result = await this._databaseRepository.update(Comic.uuid, Comic);
+        if (result.affected === 0) {
+            throw new NotFoundException("There isn't a comic with this uuid");
+        }
     }
 }

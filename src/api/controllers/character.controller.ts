@@ -4,6 +4,7 @@ import { injectable, inject } from "inversify";
 import { TYPES } from "../util/di/di-types";
 import { ICharacterService } from "../../domain/interfaces/i.character.service";
 import { Character } from "../../domain/entities/character.entity";
+import { NotFoundException } from "../../domain/exceptions/not-found.exception";
 
 @injectable()
 export class CharacterController implements ICharacterController {
@@ -14,7 +15,7 @@ export class CharacterController implements ICharacterController {
         this._characterService = characterService;
 
         this.getAll = this.getAll.bind(this);
-        this.getById = this.getById.bind(this);
+        this.getByUuid = this.getByUuid.bind(this);
         this.create = this.create.bind(this);
         this.delete = this.delete.bind(this);
         this.update = this.update.bind(this);
@@ -25,19 +26,24 @@ export class CharacterController implements ICharacterController {
         return reply.send(characters);
     }
 
-    public async getById(request: FastifyRequest, reply: FastifyReply): Promise<FastifyReply> {
-        const character = this._characterService.getByUuid(request.params['uuid']);
+    public async getByUuid(request: FastifyRequest, reply: FastifyReply): Promise<FastifyReply> {
+        const character = await this._characterService.getByUuid(request.params['uuid']);
+
+        if (!character) throw new NotFoundException("The specified character was not found");
+        
         return reply.send(character);
     }
 
     public async update(request: FastifyRequest, reply: FastifyReply): Promise<FastifyReply> {
-        await this._characterService.update(request.body as Character);
-        return reply.send(204);
+        const character = request.body as Character;
+        character.uuid = request.params['uuid'];
+        await this._characterService.update(character);
+        return reply.send("Character updated with success");
     }
 
     public async delete(request: FastifyRequest, reply: FastifyReply): Promise<FastifyReply> {
         await this._characterService.delete(request.params['uuid']);
-        return reply.send(204);
+        return reply.send("Character deleted with success");
     }
 
     public async create(request: FastifyRequest, reply: FastifyReply): Promise<FastifyReply> {

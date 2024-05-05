@@ -9,4 +9,5 @@ export interface ITokenRepository {
     getAllForExchange(): Promise<Token[]>;
     getByUuid(uuid: string): Promise<Token>;
     getByContent(contentId: string, contentType: ContentType): Promise<Token>;
+    update(token: Token): Promise<void>;
 }

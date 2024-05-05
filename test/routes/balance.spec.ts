@@ -51,7 +51,7 @@ describe("/balance/withdraw", () => {
         if (response) {
             const json = JSON.parse(response.body);
             expect(response.statusCode).toBe(200);
-            expect(response.body).toBe("Withdraw successful!");
+            expect(json.message).toBe("Withdraw successful!");
         }
     })
 })
@@ -85,7 +85,7 @@ describe("/balance/deposit", () => {
         if (response) {
             const json = JSON.parse(response.body);
             expect(response.statusCode).toBe(200);
-            expect(response.body).toBe("Deposit successful!");
+            expect(json.message).toBe("Deposit successful!");
         }
     })
 })

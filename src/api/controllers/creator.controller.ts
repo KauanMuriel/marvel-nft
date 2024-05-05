@@ -31,13 +31,15 @@ export class CreatorController implements ICreatorController {
     }
 
     public async update(request: FastifyRequest, reply: FastifyReply): Promise<FastifyReply> {
-        await this._creatorService.update(request.body as Creator);
-        return reply.status(204);
+        const creator = request.body as Creator;
+        creator.uuid = request.params['uuid']; 
+        await this._creatorService.update(creator);
+        return reply.send("Creator updated with success");
     }
     
     public async delete(request: FastifyRequest, reply: FastifyReply): Promise<FastifyReply> {
         await this._creatorService.delete(request.params['uuid']);
-        return reply.status(204);
+        return reply.send("Creator deleted with success");
     }
 
     public async create(request: FastifyRequest, reply: FastifyReply): Promise<FastifyReply> {

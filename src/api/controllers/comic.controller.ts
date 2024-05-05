@@ -17,7 +17,8 @@ export class ComicController implements IComicController {
         this.update = this.update.bind(this);
         this.create = this.create.bind(this);
         this.update = this.update.bind(this);
-        this.getById = this.getById.bind(this);
+        this.delete = this.delete.bind(this);
+        this.getByUuid = this.getByUuid.bind(this);
     }
 
     public async getAll(request: FastifyRequest, reply: FastifyReply): Promise<FastifyReply> {
@@ -25,19 +26,21 @@ export class ComicController implements IComicController {
         return reply.send(comics);
     }
     
-    public async getById(request: FastifyRequest, reply: FastifyReply): Promise<FastifyReply> {
-        console.log(request.params)
+    public async getByUuid(request: FastifyRequest, reply: FastifyReply): Promise<FastifyReply> {
         const comic = await this._comicService.getByUuid(request.params['uuid'])
         return reply.send(comic);
     }
 
     public async update(request: FastifyRequest, reply: FastifyReply): Promise<FastifyReply> {
-        throw new Error("Method not implemented.");
+        const comic = request.body as Comic;
+        comic.uuid = request.params['uuid'];
+        await this._comicService.update(comic);
+        return reply.send("Comic updated with success");
     }
     
     public async delete(request: FastifyRequest, reply: FastifyReply): Promise<FastifyReply> {
         await this._comicService.delete(request.params['uuid']);
-        return reply.send(204);
+        return reply.send("Comic deleted with success");
     }
 
     public async create(request: FastifyRequest, reply: FastifyReply): Promise<FastifyReply> {

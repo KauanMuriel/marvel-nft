@@ -1,4 +1,4 @@
-const simpleGetSchemaParams = {
+const genericUuidSchemaParams = {
     type: 'object',
     required: ['uuid'],
     properties: {
@@ -16,4 +16,4 @@ const simpleResponse = {
 }
 
 
-export { simpleGetSchemaParams, simpleResponse };
+export { genericUuidSchemaParams, simpleResponse };

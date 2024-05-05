@@ -18,7 +18,6 @@ const genericBalanceResponse = {
 const balanceOperationSchema = {
     tags: ['balance'],
     body: genericBalanceBody,
-    response: genericBalanceResponse
 };
 
 export { genericBalanceBody, genericBalanceResponse, balanceOperationSchema };

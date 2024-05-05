@@ -3,6 +3,7 @@ import { AppDataSource } from "../data-source";
 import { Character } from "../../../domain/entities/character.entity";
 import { DeleteResult, Repository, UpdateResult } from "typeorm";
 import { ICharacterRepository } from "../../../domain/interfaces/i.character.repository";
+import { NotFoundException } from "../../../domain/exceptions/not-found.exception";
 
 @injectable()
 export class CharacterRepository implements ICharacterRepository {
@@ -29,10 +30,16 @@ export class CharacterRepository implements ICharacterRepository {
     }
 
     public async delete(uuid: string): Promise<void> {
-        await this._databaseRepository.delete(uuid);
+        const result = await this._databaseRepository.delete({ uuid: uuid } as Character);
+        if (result.affected === 0) {
+            throw new NotFoundException("There isn't a character with this uuid");
+        }
     }
 
     public async update(Character: Character): Promise<void> {
-        await this._databaseRepository.update(Character.uuid, Character);
+        const result = await this._databaseRepository.update(Character.uuid, Character);
+        if (result.affected === 0) {
+            throw new NotFoundException("There isn't a character with this uuid");
+        }
     }
 }
