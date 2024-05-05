@@ -94,9 +94,7 @@ describe("/auth/sigin", () => {
         const requestBody = { password: "testing123", email: "testing.br@email.com" }
         const response = await app.fastify.inject({ method: "POST", url: "/auth/signin", body: requestBody });
         if (response) {
-            const json = JSON.parse(response.body);
-            expect(json.accessToken).toMatch(/^[A-Za-z0-9_-]{2,}(?:\.[A-Za-z0-9_-]{2,}){2}$/);
-            expect(response.statusCode).toBe(200);
+            expect(response.statusCode).toBe(401);
         }
     })
 

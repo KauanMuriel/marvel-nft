@@ -16,7 +16,10 @@ export class CreatorRepositoryMock implements ICreatorRepository {
     }
 
     create(creator: Creator): Promise<Creator> {
-        throw new Error("Method not implemented.");
+        return new Promise((resolve, reject) => {
+            this.creators.push(creator);
+            resolve(null);
+        })
     }
     
     getAll(): Promise<Creator[]> {
@@ -31,15 +34,27 @@ export class CreatorRepositoryMock implements ICreatorRepository {
         });
     }
     getByFullName(fullName: string): Promise<Creator> {
-        throw new Error("Method not implemented.");
+        return new Promise((resolve, reject) => {
+            resolve(this.creators.find((creator) => creator.fullName === fullName));
+        });
     }
     getBySufix(sufix: string): Promise<Creator> {
-        throw new Error("Method not implemented.");
+        return new Promise((resolve, reject) => {
+            resolve(this.creators.find((creator) => creator.sufix === sufix));
+        });
     }
     update(creator: Creator): Promise<void> {
-        throw new Error("Method not implemented.");
+        return new Promise((resolve, reject) => {
+            const index = this.creators.findIndex((comic) => comic.uuid === comic.uuid);
+            this.creators[index] = creator;
+            resolve(null);
+        })
     }
     delete(uuid: string): Promise<void> {
-        throw new Error("Method not implemented.");
+        return new Promise((resolve, reject) => {
+            const index = this.creators.findIndex((comic) => comic.uuid === uuid);
+            this.creators.splice(index, 1);
+            resolve(null);
+        })
     }
 }

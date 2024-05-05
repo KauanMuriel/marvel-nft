@@ -20,7 +20,7 @@ const updateComicSchema = {
     params: genericUuidSchemaParams,
     body: {
         type: 'object',
-        required: ['title', 'sufix', 'isbn', 'creator'],
+        required: ['title', 'isbn', 'creator'],
         properties: {
             title: { type: 'string' },
             isbn: { type: 'string' },

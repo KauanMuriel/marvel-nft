@@ -14,8 +14,11 @@ export class ComicRepositoryMock implements IComicRepository {
             creator: "5e3a9c10-a900-4ffb-ab22-5af49b8ac0ec"
         }];
     }
-    create(Comic: Comic): Promise<Comic> {
-        throw new Error("Method not implemented.");
+    create(comic: Comic): Promise<Comic> {
+        return new Promise((resolve, reject) => {
+            this.comics.push(comic);
+            resolve(null);
+        })
     }
     getAll(): Promise<Comic[]> {
         return new Promise((resolve, reject) => {
@@ -28,12 +31,22 @@ export class ComicRepositoryMock implements IComicRepository {
         })
     }
     getByIsbn(isbn: string): Promise<Comic> {
-        throw new Error("Method not implemented.");
+        return new Promise((resolve, reject) => {
+            resolve(this.comics.find((comic) => comic.isbn === isbn));
+        })
     }
-    update(Comic: Comic): Promise<void> {
-        throw new Error("Method not implemented.");
+    update(comic: Comic): Promise<void> {
+        return new Promise((resolve, reject) => {
+            const index = this.comics.findIndex((comic) => comic.uuid === comic.uuid);
+            this.comics[index] = comic;
+            resolve(null);
+        })
     }
     delete(uuid: string): Promise<void> {
-        throw new Error("Method not implemented.");
+        return new Promise((resolve, reject) => {
+            const index = this.comics.findIndex((comic) => comic.uuid === uuid);
+            this.comics.splice(index, 1);
+            resolve(null);
+        })
     }
 }

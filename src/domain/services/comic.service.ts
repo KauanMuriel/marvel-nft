@@ -16,6 +16,7 @@ export class ComicService implements IComicService {
         this.update = this.update.bind(this);
         this.delete = this.delete.bind(this);
         this.getAll = this.getAll.bind(this);
+        this.delete = this.delete.bind(this);
         this.getByUuid = this.getByUuid.bind(this);
     }
 
