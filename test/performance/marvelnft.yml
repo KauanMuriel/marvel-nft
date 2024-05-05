@@ -59,22 +59,121 @@ scenarios:
           headers:
             Authorization: "Bearer {{ accessToken }}"
           expect:
-            - statusCode: 200
+            - statusCode: 403
 
       - post:
           url: '/balance/withdraw'
           headers:
             Authorization: "Bearer {{ accessToken }}"
           json:
-            value: "10"
+            value: "invalid_value"
           expect:
-            - statusCode: 200
+            - statusCode: 400
 
       - post:
           url: '/balance/deposit'
           headers:
             Authorization: "Bearer {{ accessToken }}"
           json:
-            value: "20"
+            value: "invalid_value"
+          expect:
+            - statusCode: 400
+
+  - name: 'Test character routes'
+    flow:
+      - post:
+          url: '/auth/signin'
+          json:
+            email: "marvel.nft@email.com"
+            password: "superadmin"
           expect:
             - statusCode: 200
+            - json:
+                path: "$.accessToken"
+                expect: ".*"
+          save:
+            - json: "$.accessToken"
+              as: "accessToken"
+
+      - get:
+          url: '/character'
+          headers:
+            Authorization: "Bearer {{ accessToken }}"
+          expect:
+            - statusCode: 403
+
+  - name: 'Test comic routes'
+    flow:
+      - post:
+          url: '/auth/signin'
+          json:
+            email: "marvel.nft@email.com"
+            password: "superadmin"
+          expect:
+            - statusCode: 200
+            - json:
+                path: "$.accessToken"
+                expect: ".*"
+          save:
+            - json: "$.accessToken"
+              as: "accessToken"
+
+      - get:
+          url: '/comic'
+          headers:
+            Authorization: "Bearer {{ accessToken }}"
+          expect:
+            - statusCode: 403
+
+  - name: 'Test creator routes'
+    flow:
+      - post:
+          url: '/auth/signin'
+          json:
+            email: "marvel.nft@email.com"
+            password: "superadmin"
+          expect:
+            - statusCode: 200
+            - json:
+                path: "$.accessToken"
+                expect: ".*"
+          save:
+            - json: "$.accessToken"
+              as: "accessToken"
+
+      - get:
+          url: '/creator'
+          headers:
+            Authorization: "Bearer {{ accessToken }}"
+          expect:
+            - statusCode: 403
+
+  - name: 'Test token routes'
+    flow:
+      - post:
+          url: '/auth/signin'
+          json:
+            email: "marvel.nft@email.com"
+            password: "superadmin"
+          expect:
+            - statusCode: 200
+            - json:
+                path: "$.accessToken"
+                expect: ".*"
+          save:
+            - json: "$.accessToken"
+              as: "accessToken"
+
+      - get:
+          url: '/token'
+          headers:
+            Authorization: "Bearer {{ accessToken }}"
+          expect:
+            - statusCode: 403
+
+      - get:
+          url: '/token/mining'
+          headers:
+            Authorization: "Bearer {{ accessToken }}"
+          expect:
+            - statusCode: 403
