@@ -7,7 +7,7 @@ import app from "../../app";
 
 export async function authenticate(request: FastifyRequest, reply: FastifyReply) {
     if (process.env.NODE_ENV !== 'test') {
-        const authorization = request.cookies['access_token'];
+        const authorization = request.headers.authorization;
 
         if (authorization === '' || authorization === null || !authorization) {
             return reply.status(401).send({ message: "Authentication required" });
@@ -16,7 +16,7 @@ export async function authenticate(request: FastifyRequest, reply: FastifyReply)
         const encodedToken = authorization.replace('Bearer ', "");
         try {
             verify(encodedToken, process.env.JWT_SECRET)
-            const { password, uuid } = await JWTHelper.decodeToken(encodedToken);
+            const { password, uuid } = JWTHelper.decodeToken(encodedToken);
             const authService = app.container.get<IAuthService>(TYPES.IAuthService);
             await authService.validateTokenCredentials(uuid, password);
         } catch (error) {

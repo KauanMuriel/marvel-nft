@@ -17,13 +17,16 @@ import { IComicController } from "../../interfaces/i.comic.controller";
 import { IBalanceService } from "../../../domain/interfaces/i.balance.service";
 import { IBalanceController } from "../../interfaces/i.balance.controller";
 import { CreatorService, ComicService, CharacterService, AuthService, UserService, BalanceService, TokenService } from "../../../domain/services/index";
-import { CharacterController, CreatorController, ComicController, AuthController, BalanceController } from "../../controllers/index";
+import { CharacterController, CreatorController, ComicController, AuthController, BalanceController, TokenController } from "../../controllers/index";
 import { CharacterRepository, CreatorRepository, ComicRepository, UserRepository, TokenRepository } from "../../../infrastructure/db/repositories/index";
-import { ComicRepositoryMock, CharacterRepositoryMock, CreatorRepositoryMock, UserRepositoryMock } from "../../../../test/mocks/index";
+import { ComicRepositoryMock, CharacterRepositoryMock, CreatorRepositoryMock, UserRepositoryMock, TokenRepositoryMock } from "../../../../test/mocks/index";
 import { ITokenController } from "../../interfaces/i.token.controller";
-import { TokenController } from "../../controllers/token.controller";
 import { ITokenRepository } from "../../../domain/interfaces/i.token.repository";
 import { ITokenService } from "../../../domain/interfaces/i.token.service";
+import { IMarketplaceService } from "../../../domain/interfaces/i.marketplace.service";
+import { MarketplaceService } from "../../../domain/services/marketplace.service";
+import { IMarketplaceController } from "../../interfaces/i.marketplace.controller";
+import { MarketplaceController } from "../../controllers/marketplace.controller";
 
 function configureDependencyContainer(container: Container) {
     container.bind<IUserService>(TYPES.IUserService).to(UserService);
@@ -33,6 +36,7 @@ function configureDependencyContainer(container: Container) {
     container.bind<IComicService>(TYPES.IComicService).to(ComicService);
     container.bind<IBalanceService>(TYPES.IBalanceService).to(BalanceService);
     container.bind<ITokenService>(TYPES.ITokenService).to(TokenService);
+    container.bind<IMarketplaceService>(TYPES.IMarketplaceService).to(MarketplaceService);
 
     container.bind<IAuthController>(TYPES.IAuthController).to(AuthController);
     container.bind<ICreatorController>(TYPES.ICreatorController).to(CreatorController);
@@ -40,12 +44,14 @@ function configureDependencyContainer(container: Container) {
     container.bind<IComicController>(TYPES.IComicController).to(ComicController);
     container.bind<IBalanceController>(TYPES.IBalanceController).to(BalanceController);
     container.bind<ITokenController>(TYPES.ITokenController).to(TokenController);
+    container.bind<IMarketplaceController>(TYPES.IMarketplaceController).to(MarketplaceController);
 
     if(process.env.NODE_ENV === 'test') {
         container.bind<IUserRepository>(TYPES.IUserRepository).to(UserRepositoryMock);
         container.bind<ICreatorRepository>(TYPES.ICreatorRepository).to(CreatorRepositoryMock);
         container.bind<ICharacterRepository>(TYPES.ICharacterRepository).to(CharacterRepositoryMock)
         container.bind<IComicRepository>(TYPES.IComicRepository).to(ComicRepositoryMock);
+        container.bind<ITokenRepository>(TYPES.ITokenRepository).to(TokenRepositoryMock);
     } else {
         container.bind<IUserRepository>(TYPES.IUserRepository).to(UserRepository).inSingletonScope();
         container.bind<ICreatorRepository>(TYPES.ICreatorRepository).to(CreatorRepository).inSingletonScope();

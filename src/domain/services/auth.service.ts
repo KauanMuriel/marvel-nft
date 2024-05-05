@@ -38,7 +38,7 @@ export class AuthService implements IAuthService {
 
     public async validateTokenCredentials(userUuid: string, password: string) {
         const existsUser = await this._userService.getByUuid(userUuid);
-        this.validateCredentials({ password: password} as User, existsUser);
+        await this.validateCredentials({ password: password} as User, existsUser);
     }
 
     public async signup(user: User): Promise<User> {

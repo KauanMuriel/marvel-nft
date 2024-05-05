@@ -10,7 +10,8 @@ class InitialDataSeeder {
                 username: "marvel.nft",
                 password: "superadmin",
                 email: "marvel.nft@email.com",
-                admin: true
+                admin: true,
+                balance: 999999
             }])
             .orIgnore()
             .execute();

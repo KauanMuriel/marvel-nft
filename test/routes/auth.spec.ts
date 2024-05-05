@@ -8,7 +8,7 @@ describe("/auth/signup", () => {
         configDotenv({path: "./.env"})
     })
     
-    test("Must fail if don't pass email", async () => {
+    test("POST - Must fail if don't pass email", async () => {
         const requestBody = {
             username: "kauan.test",
             password: "testing123",
@@ -22,7 +22,7 @@ describe("/auth/signup", () => {
         }
     })
 
-    test("Must fail if don't pass password", async () => {
+    test("POST - Must fail if don't pass password", async () => {
         const requestBody = {
             username: "kauan.test",
             email: "testing.br@testing.com",
@@ -36,7 +36,7 @@ describe("/auth/signup", () => {
         }
     })
 
-    test("Must fail if pass a duplicate email user", async () => {
+    test("POST - Must fail if pass a duplicate email user", async () => {
         const requestBody = {
             username: "kauan.test",
             password: "testing123",
@@ -51,7 +51,7 @@ describe("/auth/signup", () => {
         }
     })
 
-    test("Must fail if pass incorret user preferences", async () => {
+    test("POST - Must fail if pass incorret user preferences", async () => {
         const requestBody = {
             username: "kauan.test",
             password: "testing123",
@@ -66,7 +66,7 @@ describe("/auth/signup", () => {
         }
     })
 
-    test("Must return an valid uuid if all properties valid", async () => {
+    test("POST - Must return an valid uuid if all properties valid", async () => {
         const requestBody = {
             username: "kauan.test",
             password: "testing123",
@@ -90,7 +90,7 @@ describe("/auth/sigin", () => {
         configDotenv({path: "./.env"})
     })
 
-    test("Must return a valid jwt if pass correct credentials", async () => {
+    test("POST - Must return a valid jwt if pass correct credentials", async () => {
         const requestBody = { password: "testing123", email: "testing.br@email.com" }
         const response = await app.fastify.inject({ method: "POST", url: "/auth/signin", body: requestBody });
         if (response) {
@@ -100,7 +100,7 @@ describe("/auth/sigin", () => {
         }
     })
 
-    test("Must fail if pass incorrect credentials", async () => {
+    test("POST - Must fail if pass incorrect credentials", async () => {
         const requestBody = { password: "testing123", email: "testing.br@email.br" }
         const response = await app.fastify.inject({ method: "POST", url: "/auth/signin", body: requestBody });
         if (response) {
