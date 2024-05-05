@@ -53,7 +53,7 @@ Abaixo as funcionalidades desenvolvidas.
 - Carteira do usuário
     - Os usuários possuem uma carteira própria onde podem depositar ou sacar dinheiro. Os usuários utilizam a carteira para comprar novos tokens ou ganhar dinheiro por meio da venda dos mesmos.
 - Preferencias
-    - Ao realizar a criação da sua conta, o usuario pode selecionar seu personagem, criador e revista preferidos, os quais devem ser cadastrados pelo administrador do sistema, entretanto nao influenciam a geracao de tokens.
+    - Ao realizar a criação da sua conta, o usuario pode selecionar seu personagem, criador e revista preferidos, os quais devem ser cadastrados pelo administrador do sistema, entretanto não influenciam a geração de tokens.
 - Minerar tokens
     - O usuário faz uma requisição para a rota de mineração e recebe como retorno um token como recompensa de seu esforço.
     - Cada token é unico, o mesmo é gerado por meio da API da marvel.
