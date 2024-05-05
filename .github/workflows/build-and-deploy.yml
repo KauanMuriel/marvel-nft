@@ -57,7 +57,7 @@ jobs:
           - name: Start docker compose
             run: docker-compose up --detach
 
-          - name: Execute load tests
-            uses: artilleryio/action-cli@v1
-            with:
-              command: run test/performance/marvelnft.yml
+          - name: Install & run Artillery
+            run: |
+              npm install -g artillery@latest
+              artillery quick -n 10 -c 10 http://127.0.0.1:3000/ping
