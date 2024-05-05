@@ -51,7 +51,7 @@ export class UserService implements IUserService {
         if (value < 0){ throw new BadRequestException("Decrease value must be positive.")};
 
         const user = await this.getByUuid(uuid);
-        if (value > user.balance){ throw new BadRequestException("Insufficient funds")};
+        if (Number(value) > Number(user.balance)){ throw new BadRequestException("Insufficient funds")};
 
         await this._userRepository.decreaseBalance(uuid, value);
     }
