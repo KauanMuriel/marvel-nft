@@ -61,4 +61,4 @@ jobs:
             run: npm install -g artillery@latest
 
           - name: Run Artillery
-            run: artillery run test/performance/marvel.yml
+            run: artillery run test/performance/marvelnft.yml
